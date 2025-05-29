@@ -25,6 +25,16 @@ The 'ae.csv' file simulated clinical adverse events for each subject, using:
 
 This data can be used to simulate SDTM AE domain and for downstream statistical summaries.
 
+## Adverse Event Descriptive Analysis
+
+The script 'analysis/describe_ae.R' produces:
+- AE counts by treatment group
+- Severity breakdown
+- AE × Treatment cross-tab
+- Barplot of AE terms
+
+Output saved in 'outputs/'.
+
 ## Tools Used
 
 - **R** - simulation and analysis
