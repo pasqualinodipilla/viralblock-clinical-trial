@@ -12,8 +12,18 @@ A realistic simulation of a randomized clinical trial evaluating the effectivene
 
 | File           | Description                                             |
 |----------------|---------------------------------------------------------|
-|.'patients.csv' | 300 randomized subjects (ID, age, sex, treatment group) |
+| 'patients.csv' | 300 randomized subjects (ID, age, sex, treatment group) |
 | 'vitals.csv'   | Vital signs (TEMP and 02SAT) at days 1, 7, 14, 21, 28   |
+| 'ae.csv'       | Adverse events: event term, day, severity, outcome, relationship to treatment |
+
+## Adverse Events (AE) Simulation
+The 'ae.csv' file simulated clinical adverse events for each subject, using:
+- Terms: headache, nausea, fatigue, etc.
+- Severity: MILD, MODERATE, SEVERE
+- Relation to treatment: NOT RELATED, POSSIBLY RELATED, RELATED
+- Outcome: RECOVERED, RECOVERING, NO RECOVERED
+
+This data can be used to simulate SDTM AE domain and for downstream statistical summaries.
 
 ## Tools Used
 
