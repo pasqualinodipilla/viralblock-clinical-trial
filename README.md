@@ -53,13 +53,13 @@ Location:
 - SAS code: '5_analysis/sas/ae_sdtm.sas',
 - Output: '3_sdtm_sas/ae_sdtm_sas.csv'.
 
-## Statistical Analyses (SAS)
+## Statistical Analyses (SAS, Pre-ADam Phase)
 
-### T-test on Oxygen Saturation (Day 28)
+### 1. T-test on Oxygen Saturation (Day 28)
 - **Script:** 't_test_o2sat_export.sas'
 - **Location:** '5_analysis/sas/'
 - **Description:** Performs a two-sample t-test comparing oxygen saturation (O2SAT) at Day 28 between treatment arms (Viralblock vs Placebo).
-- **Outputs:**
+- **Output:**
   - Full statistical results exported to PDF and RTF, including:
   - Summary statistics
   - Confidence interval
@@ -69,6 +69,23 @@ Location:
 Output files:
 - [ 't_test_full_output.pdf](outputs/t_test_full_output.pdf)
 - [ 't_test_full_output.rtf](outputs/t_test_full_output.rtf)
+
+### 2. **ANCOVA - O2SAT at Day 28 Adjusted for baseline**
+- **Script:** '5_analysis/sas/ancova_o2sat.sas'
+- **Dataset:** Merged subset of 'vitals' for day 1 and day 28
+- **Method:** 'PROC GLM'
+- **Model:** 'O2SAT_28 = ARMCD + O2SAT_BL'
+- **Output:** ['ancova_o2sat.pdf](../outputs/ancova_o2sat.pdf)
+
+### 3. **Logistic regression - Serious Adverse Events (AESER)**
+- **Script:** '5_analysis/sas/logistic_aeser.sas'
+- **Dataset:** 'ae_sdtm'
+- **Method:** 'PROC LOGISTIC'
+- **Model:** 'AESER (event="Y") = ARMCD'
+- **Output:** ['logistic_aeser.pdf'](../outputs/logistic_aeser.pdf)
+
+### Outputs
+All pdf results from sas procedures are saved in 'outputs' folder.
 
 ## Tools Used
 
