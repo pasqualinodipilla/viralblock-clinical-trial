@@ -87,6 +87,24 @@ Output files:
 ### Outputs
 All pdf results from sas procedures are saved in 'outputs' folder.
 
+## ADaM Datasets
+
+This section included scripts to derive  ADaM-compliant datasets for the clinical trial.
+---
+
+### 'generate_adsl.R'
+
+- **Description**: Derives the ADSL dataset (Subject-Level Analysis Dataset).
+- **Source**: '1_raw_data/simulated/vitals.csv'
+- **Output**: '4_adam/advs.csv'
+- **key variables**:
+  - 'PARAM', 'PARAMCD': Vital signs parameter ('O2 Saturation')
+  - 'AVISIT': Visit label ('Day 1', 'Day 28')
+  - 'AVAL': Actual value
+  - 'ANL01FL': Analysis flag (for day 1 or 28)
+  
+Script path: '4_ada/R/generate_advs.R'
+
 ## Tools Used
 
 - **R** - simulation and analysis
