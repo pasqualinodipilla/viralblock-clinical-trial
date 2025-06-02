@@ -53,6 +53,23 @@ Location:
 - SAS code: '5_analysis/sas/ae_sdtm.sas',
 - Output: '3_sdtm_sas/ae_sdtm_sas.csv'.
 
+## Statistical Analyses (SAS)
+
+### T-test on Oxygen Saturation (Day 28)
+- **Script:** 't_test_o2sat_export.sas'
+- **Location:** '5_analysis/sas/'
+- **Description:** Performs a two-sample t-test comparing oxygen saturation (O2SAT) at Day 28 between treatment arms (Viralblock vs Placebo).
+- **Outputs:**
+  - Full statistical results exported to PDF and RTF, including:
+  - Summary statistics
+  - Confidence interval
+  - Diagnostic plots (boxplots, histograms)
+- **ODS Style:** 'journal'
+
+Output files:
+- [ 't_test_full_output.pdf](outputs/t_test_full_output.pdf)
+- [ 't_test_full_output.rtf](outputs/t_test_full_output.rtf)
+
 ## Tools Used
 
 - **R** - simulation and analysis
