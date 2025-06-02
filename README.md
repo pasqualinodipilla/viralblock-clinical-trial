@@ -35,6 +35,24 @@ The script 'analysis/describe_ae.R' produces:
 
 Output saved in 'outputs/'.
 
+## SDTM AE derivation
+The script 'generating_ae_sdtm.R' converts raw AE data into an SDTM-like structure, including:
+
+- 'STUDYID', 'DOMAIN', 'AESEQ', 'AESER', 'AESTDTC', etc.,
+- ISO-formatted date calculation,
+- Derived variables based on AE severity.
+
+Output saved in '3_sdtm_R/ae_sdtm.csv'.
+
+## SAS replication
+
+The script 'ae_sdtm.sas' replicated the AE SDTM derivation in SAS.
+It reads the same raw datasets and produces 'ae_sdtm_sas.csv' as output.
+
+Location:
+- SAS code: '5_analysis/sas/ae_sdtm.sas',
+- Output: '3_sdtm_sas/ae_sdtm_sas.csv'.
+
 ## Tools Used
 
 - **R** - simulation and analysis
