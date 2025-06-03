@@ -105,6 +105,28 @@ This section included scripts to derive  ADaM-compliant datasets for the clinica
   
 Script path: '4_ada/R/generate_advs.R'
 
+### T-test Analysis (SAS)
+
+This section describes the comparison of oxygen saturation (O2SAT) at **Day 28** between treatment groups using a two-sample t-test in SAS.
+
+- **Datasets used**: 'adsl.csv', 'advs.csv'
+- **Subset condition**: 'PARAMCD = "O2SAT"' and 'AVISIT = "Day 28"'
+- **Procedure used**: 'PROC TTEST' on 'AVAL' by 'ARMCD'
+
+** Script location **: '5_analysis/sas/ttest_advs.sas'
+** Output files:**
+- ['ttest_output.pdf'](../outputs/ttest_output.pdf)
+- ['ttest_output.rtf'](../outputs/ttest_output.rtf)
+
+** Steps performed: **
+1. Imported ADaM datasets into SAS.
+2. Filtered 'ADVS' to keep only O2SAT values for Day 28.
+3. Merged treatment group info from 'ADSL' using 'USUBJID'.
+4. Ran two-sample T-test to compare means between 'ARMCD' groups.
+5. Exported output to both PDF and RTF formats via ODS.
+
+This analysis aims to evaluate whether the treatment (ViralBlock) has a statistically significant effect on O2SAT compared to the placebo group at the end of the study.
+
 ## Tools Used
 
 - **R** - simulation and analysis
