@@ -127,6 +127,25 @@ This section describes the comparison of oxygen saturation (O2SAT) at **Day 28**
 
 This analysis aims to evaluate whether the treatment (ViralBlock) has a statistically significant effect on O2SAT compared to the placebo group at the end of the study.
 
+### ANCOVA Analysis (ADaM)
+
+This analysis evaluates the oxygen saturation (O2SAT) on **Day 28** adjusted for baseilne levels using an ANCOVA model. The data used are structured in ADaM format ('ADSL' and 'ADVS' datasets).
+
+**Scripts:**
+'5_analysis/sas/ancova_analysis_adam.sas'
+
+**Input datasets:**
+- 'adsl.csv' (subject-level data)
+- advs.csv (vitals measurements in ADaM format)
+
+**Method:**
+- ANCOVA: 'O2SAT_Day_28 ~ ARMCD + O2SAT_Baseline'
+- Performed using 'PROC GLM'
+
+**Outputs:**
+- 'outputs/sas/ancova_output.pdf'
+- 'outputs/sas/ancova_output.rtf'
+
 ## Tools Used
 
 - **R** - simulation and analysis
