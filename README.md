@@ -8,7 +8,10 @@ A realistic simulation of a randomized clinical trial evaluating the effectivene
 - Generate **realistic CDISC-style datasets**
 - Apply statistical analysis using **R, SAS and SQL**
 
-## Simulated Datasets
+## 1_raw_data/
+This folder contains raw data used as input for the clinical trial simulation and future comparison with real-world data.
+
+### Simulated Datasets (location: '1_raw_data/simulated')
 
 | File           | Description                                             |
 |----------------|---------------------------------------------------------|
@@ -16,7 +19,11 @@ A realistic simulation of a randomized clinical trial evaluating the effectivene
 | 'vitals.csv'   | Vital signs (TEMP and 02SAT) at days 1, 7, 14, 21, 28   |
 | 'ae.csv'       | Adverse events: event term, day, severity, outcome, relationship to treatment |
 
-## Adverse Events (AE) Simulation
+These datasets were generated to simulate clinical trial conditions. They serve as inputs for SDTM transformation and downstream statistical analysis.
+
+---
+
+### Adverse Events (AE) Simulation Details
 The 'ae.csv' file simulated clinical adverse events for each subject, using:
 - Terms: headache, nausea, fatigue, etc.
 - Severity: MILD, MODERATE, SEVERE
@@ -24,6 +31,15 @@ The 'ae.csv' file simulated clinical adverse events for each subject, using:
 - Outcome: RECOVERED, RECOVERING, NO RECOVERED
 
 This data can be used to simulate SDTM AE domain and for downstream statistical summaries.
+
+---
+
+### Simulation scripts
+
+The scripts used to generate the simulated datasets above are located in '1_raw_data/simulation_code/':
+- 'simulate_patients.R'
+- 'simulate_vitals.R'
+- 'simulate_ae.R'
 
 ## Adverse Event Descriptive Analysis
 
