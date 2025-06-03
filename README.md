@@ -146,6 +146,26 @@ This analysis evaluates the oxygen saturation (O2SAT) on **Day 28** adjusted for
 - 'outputs/sas/ancova_output.pdf'
 - 'outputs/sas/ancova_output.rtf'
 
+### Logistic Regression Analysis (ADaM)
+
+This logistic regression evaluates the effect of treatment on the probability of hypoxemia, defined as oxygen saturation (O2SAT) <= 90 at **Day 28**. The analysis is based on ADaM datasets.
+
+**Script:**
+'5_analysis/sas/logistic_o2sat_day28.sas'
+
+**Input datasets:**
+- 'adsl.csv' (subject-level ADaM data)
+- 'advs.csv' (vital signs ADaM data)
+
+**Method:**
+- Binary outcome: 'hypo_flag = 1' if O2SAT <= 90 at Day 28, 0 otherwise
+- Logistic regression: 'hypo_flag ~ ARMCD'
+- Reference group: 'Placebo (ARMCD = 'PBO')'
+
+**Outputs:**
+- 'outputs/sas/logistic_output.pdf'
+- 'outputs/sas/logistic_output.rtf'
+
 ## Tools Used
 
 - **R** - simulation and analysis
