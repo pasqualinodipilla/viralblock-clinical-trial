@@ -15,7 +15,7 @@ This folder contains raw data used as input for the clinical trial simulation an
 
 | File           | Description                                             |
 |----------------|---------------------------------------------------------|
-| 'patients.csv' | 300 randomized subjects (ID, age, sex, treatment group) |
+| 'dm.csv' | 300 randomized subjects (ID, age, sex, treatment group...) |
 | 'vitals.csv'   | Vital signs (TEMP and 02SAT) at days 1, 7, 14, 21, 28   |
 | 'ae.csv'       | Adverse events: event term, day, severity, outcome, relationship to treatment |
 
@@ -36,19 +36,22 @@ This data can be used to simulate SDTM AE domain and for downstream statistical 
 
 ### Simulation scripts
 
-The scripts used to generate the simulated datasets above are located in '1_raw_data/simulation_code/':
-- 'simulate_patients.R'
-  - Simulates the main patient dataset ('patients.csv') with 300 participants.
+The scripts used to generate the simulated datasets reflecting CDASH standards are located in '1_raw_data/simulation_code/':
+- 'dm.R'
+  - Simulates the main patient dataset ('dm.csv') with 300 participants.
     **Included Fields:**
     - 'USUBJID': Unique Subject Identifier (e.g. 'SUBJ001')
     - 'AGE': random age between 20 and 85
+    - 'AGEU': age units
     - 'SEX': biological sex ('M' or 'F')
     - 'ARMCMD': treatment group ('PBO' for placebo, 'VRB' for Viralblock)
+    - 'ARM': Text description of treatment group
     - 'RACE': Ethnicity ('White', 'Black', 'Asian', 'Other')
     - 'COUNTRY': country of origin
     - 'TRTSDT': Start date of treatment
-    - 'TRTEDT': End date (automatically 28 days later)
+    - 'TRTENDT': End date (automatically 28 days later)
     - 'STUDYID': Fixed identifier '"VIRALBLOCK01"'
+    - 'DOMAIN': Domain abbreviation
 - 'simulate_vitals.R'
   - Generates longitudinal vital signs for each patient ('vitals.csv') across visit days 1, 7, 14, 21 and 28.
     **Simulated variables:**
