@@ -9,7 +9,7 @@ visits <- expand.grid(
 )
 
 # Merge patient and visit data by subject ID
-vitals <- merge(visits, patients[, c("USUBJID", "ARMCD")], by = "USUBJID")
+vitals <- merge(visits, patients[, c("USUBJID", "ARMCD", "AGE", "SEX")], by = "USUBJID")
 
 # Seed for reproducibility
 set.seed(456)
@@ -24,9 +24,9 @@ vitals$TEMP <- rnorm(nrow(vitals),
 # Simulate oxygen saturation (Sp02): improving more with Viralblock
 vitals$O2SAT <- round(rnorm(nrow(vitals),
                             mean = ifelse(vitals$ARMCD == "PBO",
-                                          94 + vitals$VISITDY * 0.1,
-                                          94 + vitals$VISITDY * 0.2),
-                            sd = 1.2), 1)
+                                          94 + vitals$VISITDY * 0.05,
+                                          94 + vitals$VISITDY * 0.12),
+                            sd = 1.0), 1)
 
 # Save the vital signs dataset
 write.csv(vitals, "1_raw_data/simulated/vitals.csv", row.names = FALSE)

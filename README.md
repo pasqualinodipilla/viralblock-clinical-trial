@@ -38,9 +38,39 @@ This data can be used to simulate SDTM AE domain and for downstream statistical 
 
 The scripts used to generate the simulated datasets above are located in '1_raw_data/simulation_code/':
 - 'simulate_patients.R'
+  - Simulates the main patient dataset ('patients.csv') with 300 participants.
+    **Included Fields:**
+    - 'USUBJID': Unique Subject Identifier (e.g. 'SUBJ001')
+    - 'AGE': random age between 20 and 85
+    - 'SEX': biological sex ('M' or 'F')
+    - 'ARMCMD': treatment group ('PBO' for placebo, 'VRB' for Viralblock)
+    - 'RACE': Ethnicity ('White', 'Black', 'Asian', 'Other')
+    - 'COUNTRY': country of origin
+    - 'TRTSDT': Start date of treatment
+    - 'TRTEDT': End date (automatically 28 days later)
+    - 'STUDYID': Fixed identifier '"VIRALBLOCK01"'
 - 'simulate_vitals.R'
+  - Generates longitudinal vital signs for each patient ('vitals.csv') across visit days 1, 7, 14, 21 and 28.
+    **Simulated variables:**
+    - 'TEMP': Body temperature (initially higher for placebo group)
+    - 'SO2SAT': Oxygen saturation (SpO2), improving more in 'VRB'
 - 'simulate_ae.R'
+  - Simulates adverse events ('ae.csv') with probabilities based on treatment arm and severity.
+    **Included Fields:**
+    - 'STUDYID': (see above)
+    - 'USUBJID': (see above)
+    - 'AESER': Serious event indicator ('Y/N')
+    - 'ARMCD': (see above)
+    - 'AESEV': Severity ('MILD', 'MODERATE', 'SEVERE')
+    - 'AETERM': Adverse event term (e.g. "Headache", "Fatigue")
+    - 'AEOUT': Outcome (e.g., "RECOVERED", "NOT RECOVERED")
+    - 'AEREL': Relationship to treatment (e.g. "RELATED", "NOT RELATED")
+    - 'AESOC': System organ class (e.g. "General disorders")
 
+The probabilities are adjusted to reflect clinical realism:
+- Events are **more severe** in 'PBO',
+- Recovery is **less likely** in 'PBO',
+- Drug-event relationship is **more likely** in 'VRB'.
 ## Adverse Event Descriptive Analysis
 
 The script '5_analysis/pre_adam/r/describe_ae.R' produces:
