@@ -16,7 +16,7 @@ This folder contains raw data used as input for the clinical trial simulation an
 | File           | Description                                             |
 |----------------|---------------------------------------------------------|
 | 'dm.csv' | 300 randomized subjects (ID, age, sex, treatment group...) |
-| 'vitals.csv'   | Vital signs (TEMP and 02SAT) at days 1, 7, 14, 21, 28   |
+| 'vs.csv'   | Vital signs (TEMP and 02SAT) at days 1, 7, 14, 21, 28   |
 | 'ae.csv'       | Adverse events: event term, day, severity, outcome, relationship to treatment |
 
 These datasets were generated to simulate clinical trial conditions. They serve as inputs for SDTM transformation and downstream statistical analysis.
@@ -38,7 +38,7 @@ This data can be used to simulate SDTM AE domain and for downstream statistical 
 
 The scripts used to generate the simulated datasets reflecting CDASH standards are located in '1_raw_data/simulation_code/':
 - 'dm.R'
-  - Simulates the main patient dataset ('dm.csv') with 300 participants.
+  - Simulates the main patient dataset ('1_raw_data/simulated/dm.csv') with 300 participants.
     **Included Fields:**
     - 'USUBJID': Unique Subject Identifier (e.g. 'SUBJ001')
     - 'AGE': random age between 20 and 85
@@ -52,11 +52,33 @@ The scripts used to generate the simulated datasets reflecting CDASH standards a
     - 'TRTENDT': End date (automatically 28 days later)
     - 'STUDYID': Fixed identifier '"VIRALBLOCK01"'
     - 'DOMAIN': Domain abbreviation
-- 'simulate_vitals.R'
-  - Generates longitudinal vital signs for each patient ('vitals.csv') across visit days 1, 7, 14, 21 and 28.
+- 'vs.R'
+  - Generates longitudinal vital signs for each patient ('1_raw_data/simulated/vs.csv', CDASH-like vital signs dataset) across visit days 1, 7, 14, 21 and 28.
+  
+    **Visit schedule**
+    Measurements are collected on:
+    - **Day 1, 7, 14, 21, 28**
+    
     **Simulated variables:**
-    - 'TEMP': Body temperature (initially higher for placebo group)
+    - 'STUDYID': Study identifier (e.g. '"VIRALBLOCK01')
+    - 'DOMAIN': CDASH domain code, fixed to 'VS'
+    - 'USUBJID': Unique Subject ID (e.g. 'SUBJ001')
+    - 'VISITNUM': Sequential visit number (1 to 5)
+    - 'VISIT': Visit name (e.g., '"Day 1"', '"Day 7"', etc.)
+    - 'VSDY': Study day number (aligned with visit schedule)
+    - 'VSDTC': Visit date (TRTSDT + VSDY)
+    - 'VSTESTCD': Vital sign short name ('TEMP', 'SPO2')
+    - 'VSTEST': Vital sign full description ('Body Temperature', 'Oxygen Saturation')
+    - 'VSORRES': Observed result (numeric)
+    - 'VSORRESU': Unit of measure ('"°C)"' for TEMP, '%"' for SPO2)
+    - 'SEX': patient sex from demographics
+    - 'AGE': patient age from demographics
+    - 'ARMCD': Treatment group ('PBO', 'VRB')
+    
+    **Simulation logic**
+    - 'TEMP': Body temperature (initially higher for placebo group then decreases over time)
     - 'SO2SAT': Oxygen saturation (SpO2), improving more in 'VRB'
+    
 - 'simulate_ae.R'
   - Simulates adverse events ('ae.csv') with probabilities based on treatment arm and severity.
     **Included Fields:**
