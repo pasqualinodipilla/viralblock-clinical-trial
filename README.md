@@ -17,27 +17,17 @@ This folder contains raw data used as input for the clinical trial simulation an
 |----------------|---------------------------------------------------------|
 | 'dm.csv' | 300 randomized subjects (ID, age, sex, treatment group...) |
 | 'vs.csv'   | Vital signs (TEMP and 02SAT) at days 1, 7, 14, 21, 28   |
-| 'ae.csv'       | Adverse events: event term, day, severity, outcome, relationship to treatment |
+| 'ae.csv'       | Adverse events: event term, day, severity, outcome, relationship to treatment ... |
 
 These datasets were generated to simulate clinical trial conditions. They serve as inputs for SDTM transformation and downstream statistical analysis.
-
----
-
-### Adverse Events (AE) Simulation Details
-The 'ae.csv' file simulated clinical adverse events for each subject, using:
-- Terms: headache, nausea, fatigue, etc.
-- Severity: MILD, MODERATE, SEVERE
-- Relation to treatment: NOT RELATED, POSSIBLY RELATED, RELATED
-- Outcome: RECOVERED, RECOVERING, NO RECOVERED
-
-This data can be used to simulate SDTM AE domain and for downstream statistical summaries.
 
 ---
 
 ### Simulation scripts
 
 The scripts used to generate the simulated datasets reflecting CDASH standards are located in '1_raw_data/simulation_code/':
-- 'dm.R'
+
+#### 'dm.R'
   - Simulates the main patient dataset ('1_raw_data/simulated/dm.csv') with 300 participants.
     **Included Fields:**
     - 'USUBJID': Unique Subject Identifier (e.g. 'SUBJ001')
@@ -52,7 +42,8 @@ The scripts used to generate the simulated datasets reflecting CDASH standards a
     - 'TRTENDT': End date (automatically 28 days later)
     - 'STUDYID': Fixed identifier '"VIRALBLOCK01"'
     - 'DOMAIN': Domain abbreviation
-- 'vs.R'
+    
+#### 'vs.R'
   - Generates longitudinal vital signs for each patient ('1_raw_data/simulated/vs.csv', CDASH-like vital signs dataset) across visit days 1, 7, 14, 21 and 28.
   
     **Visit schedule**
@@ -79,23 +70,36 @@ The scripts used to generate the simulated datasets reflecting CDASH standards a
     - 'TEMP': Body temperature (initially higher for placebo group then decreases over time)
     - 'SO2SAT': Oxygen saturation (SpO2), improving more in 'VRB'
     
-- 'simulate_ae.R'
-  - Simulates adverse events ('ae.csv') with probabilities based on treatment arm and severity.
-    **Included Fields:**
-    - 'STUDYID': (see above)
-    - 'USUBJID': (see above)
-    - 'AESER': Serious event indicator ('Y/N')
-    - 'ARMCD': (see above)
-    - 'AESEV': Severity ('MILD', 'MODERATE', 'SEVERE')
-    - 'AETERM': Adverse event term (e.g. "Headache", "Fatigue")
-    - 'AEOUT': Outcome (e.g., "RECOVERED", "NOT RECOVERED")
-    - 'AEREL': Relationship to treatment (e.g. "RELATED", "NOT RELATED")
-    - 'AESOC': System organ class (e.g. "General disorders")
+#### 'ae.R' 
+  - This script simulates **Adverse Events (AEs)** for each subject based on probabilities associated with the treatment arm and AE severity. It produces a CDASH-like dataset saved as '1_raw_data/simulated/ae.csv'.
 
-The probabilities are adjusted to reflect clinical realism:
-- Events are **more severe** in 'PBO',
-- Recovery is **less likely** in 'PBO',
-- Drug-event relationship is **more likely** in 'VRB'.
+    **Included Fields:**
+    - 'STUDYID': Study identifier ('VIRALBLOCK01')
+    - 'DOMAIN': CDASH domain code ("AE")
+    - 'USUBJID': Unique subject identifier
+    - 'AETERM': Adverse event term (e.g. "Headache", "Fatigue")
+    - 'AEOUT': Outcome (e.g., "RECOVERED", "RECOVERING", "NOT RECOVERED")
+    - 'AEACN': Action taken ("DOSE REDUCED", "DRUG WITHDRAWN", 'NONE')
+    - 'AEREL': Relationship to treatment (e.g. "RELATED", "POSSIBLY RELATED" "NOT RELATED")
+    - 'AEPRESP': Was the AE present at screening? ('Y', 'N', 'UNKNOWN')
+    - 'AEENRF': Is the AE ongoing or resolved? ('ONGOING', 'RESOLVED')
+    - 'AESER': Serious event indicator ('Y/N')
+    - 'AESEV': Severity ('MILD', 'MODERATE', 'SEVERE')
+    - 'AESTDTC': Start date of the adverse event (relative to treatment start)
+    - 'AEENDTC': End date of the adverse event
+    - 'ARMCD': Treatment arm code ('PBO','VRB')
+    - 'AESOC': System organ class (e.g. "Gastrointestinal disorders", "Skin disorders")
+
+#### Notes:
+- 'AESOC' is mapped from 'AETERM' using a predefined dictionary of 5 organ classes.
+- AE start and end dates are randomized within 14 and 28 days post-treatment start.
+- The simulation is fully reproducible using a fixed seed.
+- Each subject from "dm.csv" can have between 0 and 3 simulated adverse events.
+-The probabilities are adjusted to reflect clinical realism:
+  - Events are **more severe** in 'PBO',
+  - Recovery is **less likely** in 'PBO',
+  - Drug-event relationship is **more likely** in 'VRB'.
+
 ## Adverse Event Descriptive Analysis
 
 The script '5_analysis/pre_adam/r/describe_ae.R' produces:
