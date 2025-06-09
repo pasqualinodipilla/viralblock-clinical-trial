@@ -28,5 +28,8 @@ dm$ARM     <- ifelse(dm$ARMCD == "VRB", "ViralBlock", "Placebo")
 # Add treatment end date 28 days later (e.g. fixed duration)
 dm$TRTENDT <- dm$TRTSDT + 28
 
+#Modify races compatible with SDTM
+dm$RACE <- ifelse(dm$RACE == "Black", "Black or African American", dm$RACE)
+
 # Save the simulated dataset as a csv file
 write.csv(dm, "1_raw_data/simulated/dm.csv", row.names = FALSE)
