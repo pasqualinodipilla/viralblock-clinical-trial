@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="define2-0-0.xsl"?>
+<ODM
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns="http://www.cdisc.org/ns/odm/v1.3"
+     xmlns:def="http://www.cdisc.org/ns/def/v2.0"
+     ODMVersion="1.3.2"
+     FileType="Snapshot"
+     FileOID="ViralBlock-COVID-Study.SDTMIG.3.3"
+     CreationDateTime="2025-06-17T10:04:30+02:00"
+     SourceSystem="Pinnacle 21 Community"
+     SourceSystemVersion="4.1.0">
+   <Study OID="ViralBlock-COVID-Study.SDTMIG.3.3">
+      <GlobalVariables>
+         <StudyName>ViralBlock COVID Study</StudyName>
+         <StudyDescription>Phase II Randomized Trial of ViralBlock vs Placebo</StudyDescription>
+         <ProtocolName>VB-COV-PROT-001</ProtocolName>
+      </GlobalVariables>
+      <MetaDataVersion OID="MDV.ViralBlock-COVID-Study.SDTMIG.3.3"
+                       Name="Study ViralBlock COVID Study Data Definitions"
+                       def:DefineVersion="2.0.0"
+                       def:StandardName="SDTM-IG"
+                       def:StandardVersion="3.3">
+         <ItemGroupDef OID="IG.DM" Domain="DM" Name="DM" Repeating="No" IsReferenceData="No"
+                       SASDatasetName="DM"
+                       Purpose="Tabulation"
+                       def:Structure="One record per subject"
+                       def:Class="SPECIAL PURPOSE"
+                       def:ArchiveLocationID="LF.DM">
+            <Description>
+               <TranslatedText>Demographics</TranslatedText>
+            </Description>
+            <ItemRef ItemOID="IT.DM.STUDYID" Mandatory="Yes" OrderNumber="1" KeySequence="1"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.DM.DOMAIN" Mandatory="Yes" OrderNumber="2" Role="Identifier"/>
+            <ItemRef ItemOID="IT.DM.USUBJID" Mandatory="Yes" OrderNumber="3" KeySequence="2"
+                     MethodOID="MT.Concatenate STUDYID and SUBJID using catx('-', STUDYID, SUBJID)"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.DM.SUBJID" Mandatory="Yes" OrderNumber="4"
+                     MethodOID="MT.Extracted from USUBJID_OLD using substr(USUBJID_OLD, 5)"
+                     Role="Topic"/>
+            <ItemRef ItemOID="IT.DM.RFSTDTC" Mandatory="No" OrderNumber="5"
+                     MethodOID="MT.Derived from TRTSDT using put(TRTSDT, yymmdd10.)"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.RFENDTC" Mandatory="No" OrderNumber="6"
+                     MethodOID="MT.Derived from TRTENDT using put(TRTENDT, yymmdd10.)"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.RFXSTDTC" Mandatory="No" OrderNumber="7"
+                     MethodOID="MT.Set equal to TRTSDTC"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.RFXENDTC" Mandatory="No" OrderNumber="8"
+                     MethodOID="MT.Set equal to TRTENDTC"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.RFICDTC" Mandatory="No" OrderNumber="9" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.RFPENDTC" Mandatory="No" OrderNumber="10"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.DTHDTC" Mandatory="No" OrderNumber="11" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.DTHFL" Mandatory="No" OrderNumber="12" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.SITEID" Mandatory="Yes" OrderNumber="13" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.INVNAM" Mandatory="No" OrderNumber="14" Role="Synonym Qualifier"/>
+            <ItemRef ItemOID="IT.DM.BRTHDTC" Mandatory="No" OrderNumber="15"
+                     MethodOID="MT.Calculated using intnx('year', TRTSDT, -AGE, 's') and formatted with put(..., yymmdd10.)"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.AGE" Mandatory="No" OrderNumber="16" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.AGEU" Mandatory="No" OrderNumber="17" Role="Variable Qualifier"/>
+            <ItemRef ItemOID="IT.DM.SEX" Mandatory="Yes" OrderNumber="18" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.RACE" Mandatory="No" OrderNumber="19" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.COUNTRY" Mandatory="Yes" OrderNumber="20"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.ETHNIC" Mandatory="No" OrderNumber="21" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.ARMCD" Mandatory="No" OrderNumber="22" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.ARM" Mandatory="No" OrderNumber="23" Role="Synonym Qualifier"/>
+            <ItemRef ItemOID="IT.DM.ACTARMCD" Mandatory="No" OrderNumber="24"
+                     MethodOID="MT.Copied from ARMCD"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.ACTARM" Mandatory="No" OrderNumber="25"
+                     MethodOID="MT.Copied from ARM"
+                     Role="Synonym Qualifier"/>
+            <ItemRef ItemOID="IT.DM.TRTSDTC" Mandatory="No" OrderNumber="26"
+                     MethodOID="MT.Derived from TRTSDT using put(TRTSDT, yymmdd10.)"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.DM.TRTENDTC" Mandatory="No" OrderNumber="27"
+                     MethodOID="MT.Derived from TRTENDT using put(TRTENDT, yymmdd10.)"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.DM.DMDTC" Mandatory="No" OrderNumber="28"
+                     MethodOID="MT.Set equal to TRTSDTC"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.DM.ARMNRS" Mandatory="No" OrderNumber="29"
+                     MethodOID="MT.Derived from ARM, ACTARM, and SCRFL based on predefined logic"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.DM.ACTARMRS" Mandatory="No" OrderNumber="30"
+                     MethodOID="MT.Derived from ARM, ACTARM, and SCRFL; renamed for XPT length limit"
+                     Role="Record Qualifier"/>
+            <def:leaf ID="LF.DM" xlink:href="dm.xpt">
+               <def:title>dm.xpt</def:title>
+            </def:leaf>
+         </ItemGroupDef>
+         <ItemGroupDef OID="IG.AE" Domain="AE" Name="AE" Repeating="Yes" IsReferenceData="No"
+                       SASDatasetName="AE"
+                       Purpose="Tabulation"
+                       def:Structure="One record per adverse event per subject"
+                       def:Class="EVENTS"
+                       def:ArchiveLocationID="LF.AE">
+            <Description>
+               <TranslatedText>Adverse Events</TranslatedText>
+            </Description>
+            <ItemRef ItemOID="IT.AE.STUDYID" Mandatory="Yes" OrderNumber="1" KeySequence="1"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.AE.DOMAIN" Mandatory="Yes" OrderNumber="2" Role="Identifier"/>
+            <ItemRef ItemOID="IT.AE.USUBJID" Mandatory="No" OrderNumber="3" KeySequence="2"
+                     MethodOID="MT.catx(&#34;-&#34;, STUDYID, SUBJID)"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.AE.AESEQ" Mandatory="Yes" OrderNumber="4"
+                     MethodOID="MT.Assigned sequentially by USUBJID"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.AE.AETERM" Mandatory="Yes" OrderNumber="5" Role="Topic"/>
+            <ItemRef ItemOID="IT.AE.AESTDTC" Mandatory="No" OrderNumber="6" KeySequence="3"
+                     MethodOID="MT.put(AESTDTC_num, yymmdd10.)"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.AE.AEENDTC" Mandatory="No" OrderNumber="7"
+                     MethodOID="MT.put(AEENDTC_num, yymmdd10.)"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.AE.AESTDY" Mandatory="No" OrderNumber="8"
+                     MethodOID="MT.AESTDT - '01JAN2023'd + 1"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.AE.AEENDY" Mandatory="No" OrderNumber="9"
+                     MethodOID="MT.AEENDT - '01JAN2023'd + 1"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.AE.AESER" Mandatory="No" OrderNumber="10" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AESEV" Mandatory="No" OrderNumber="11" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AEOUT" Mandatory="No" OrderNumber="12" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AEACN" Mandatory="No" OrderNumber="13" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AEREL" Mandatory="No" OrderNumber="14" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AEPRESP" Mandatory="No" OrderNumber="15"
+                     Role="Variable Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AEONGO" Mandatory="No" OrderNumber="16"
+                     MethodOID="MT.if upcase(AEENRF)=&#34;ONGOING&#34; then &#34;Y&#34;"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.AE.AETOXGR" Mandatory="No" OrderNumber="17" Role="Record Qualifier"/>
+            <def:leaf ID="LF.AE" xlink:href="ae.xpt">
+               <def:title>ae.xpt</def:title>
+            </def:leaf>
+         </ItemGroupDef>
+         <ItemGroupDef OID="IG.VS" Domain="VS" Name="VS" Repeating="Yes" IsReferenceData="No"
+                       SASDatasetName="VS"
+                       Purpose="Tabulation"
+                       def:Structure="One record per vital sign measurement per time point per visit per subject"
+                       def:Class="FINDINGS"
+                       def:ArchiveLocationID="LF.VS">
+            <Description>
+               <TranslatedText>Vital Signs</TranslatedText>
+            </Description>
+            <ItemRef ItemOID="IT.VS.STUDYID" Mandatory="Yes" OrderNumber="1" KeySequence="1"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.VS.DOMAIN" Mandatory="Yes" OrderNumber="2" Role="Identifier"/>
+            <ItemRef ItemOID="IT.VS.USUBJID" Mandatory="No" OrderNumber="3" KeySequence="2"
+                     MethodOID="MT.Derived from USUBJID_OLD using catx(&#34;-&#34;, STUDYID, SUBJID)"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.VS.VSSEQ" Mandatory="Yes" OrderNumber="4"
+                     MethodOID="MT.Sequence by USUBJID, assigned incrementally"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.VS.VSTESTCD" Mandatory="Yes" OrderNumber="5" KeySequence="3"
+                     Role="Topic"/>
+            <ItemRef ItemOID="IT.VS.VSTEST" Mandatory="Yes" OrderNumber="6" Role="Synonym Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSORRES" Mandatory="No" OrderNumber="7" Role="Result Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSORRESU" Mandatory="No" OrderNumber="8"
+                     Role="Variable Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSSTRESC" Mandatory="No" OrderNumber="9"
+                     MethodOID="MT.Set equal to VSORRES"
+                     Role="Result Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSSTRESN" Mandatory="No" OrderNumber="10"
+                     MethodOID="MT.Parsed from VSORRES using input(..., best.)"
+                     Role="Result Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSSTRESU" Mandatory="No" OrderNumber="11"
+                     MethodOID="MT.Derived from logic on VSTESTCD"
+                     Role="Variable Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSSTAT" Mandatory="No" OrderNumber="12" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSREASND" Mandatory="No" OrderNumber="13"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSDTC" Mandatory="No" OrderNumber="14"
+                     MethodOID="MT.Derived from VSDTC_num using put(..., yymmdd10.)"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.VS.VSDY" Mandatory="No" OrderNumber="15" Role="Timing"/>
+            <ItemRef ItemOID="IT.VS.VISITNUM" Mandatory="No" OrderNumber="16" KeySequence="4"
+                     Role="Timing"/>
+            <ItemRef ItemOID="IT.VS.VISIT" Mandatory="No" OrderNumber="17" Role="Timing"/>
+            <ItemRef ItemOID="IT.VS.VSBLFL" Mandatory="No" OrderNumber="18"
+                     MethodOID="MT.Set to &#34;Y&#34; when VISITNUM = 1"
+                     Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSLOC" Mandatory="No" OrderNumber="19" Role="Record Qualifier"/>
+            <ItemRef ItemOID="IT.VS.VSNAM" Mandatory="No" OrderNumber="20" Role="Record Qualifier"/>
+            <def:leaf ID="LF.VS" xlink:href="vs.xpt">
+               <def:title>vs.xpt</def:title>
+            </def:leaf>
+         </ItemGroupDef>
+         <ItemGroupDef OID="IG.SUPPAE" Domain="AE" Name="SUPPAE" Repeating="Yes" IsReferenceData="No"
+                       SASDatasetName="SUPPAE"
+                       Purpose="Tabulation"
+                       def:Structure="One record per IDVAR, IDVARVAL, and QNAM value per subject"
+                       def:Class="RELATIONSHIP"
+                       def:ArchiveLocationID="LF.SUPPAE">
+            <Description>
+               <TranslatedText>Supplemental Qualifiers for AE</TranslatedText>
+            </Description>
+            <ItemRef ItemOID="IT.SUPPAE.STUDYID" Mandatory="Yes" OrderNumber="1" KeySequence="1"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.SUPPAE.RDOMAIN" Mandatory="Yes" OrderNumber="2" KeySequence="2"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.SUPPAE.USUBJID" Mandatory="No" OrderNumber="3" KeySequence="3"
+                     MethodOID="MT.Derived using catx(&#34;-&#34;, STUDYID, SUBJID) from AE"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.SUPPAE.IDVAR" Mandatory="No" OrderNumber="4" KeySequence="4"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.SUPPAE.IDVARVAL" Mandatory="No" OrderNumber="5" KeySequence="5"
+                     MethodOID="MT.Converted from AESEQ using put(AESEQ, best.)"
+                     Role="Identifier"/>
+            <ItemRef ItemOID="IT.SUPPAE.QNAM" Mandatory="Yes" OrderNumber="6" KeySequence="6"
+                     Role="Topic"/>
+            <ItemRef ItemOID="IT.SUPPAE.QLABEL" Mandatory="Yes" OrderNumber="7"
+                     Role="Synonym Qualifier"/>
+            <ItemRef ItemOID="IT.SUPPAE.QVAL" Mandatory="Yes" OrderNumber="8"
+                     MethodOID="MT.Taken from AESOC in AE"
+                     Role="Result Qualifier"/>
+            <def:leaf ID="LF.SUPPAE" xlink:href="suppae.xpt">
+               <def:title>suppae.xpt</def:title>
+            </def:leaf>
+         </ItemGroupDef>
+         <ItemDef OID="IT.DM.STUDYID" Name="STUDYID" DataType="text" Length="14"
+                  SASFieldName="STUDYID"
+                  def:DisplayFormat="$14.">
+            <Description>
+               <TranslatedText>Study Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.DOMAIN" Name="DOMAIN" DataType="text" Length="4"
+                  SASFieldName="DOMAIN"
+                  def:DisplayFormat="$4.">
+            <Description>
+               <TranslatedText>Domain Abbreviation</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.USUBJID" Name="USUBJID" DataType="text" Length="20"
+                  SASFieldName="USUBJID">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.SUBJID" Name="SUBJID" DataType="text" Length="9"
+                  SASFieldName="SUBJID">
+            <Description>
+               <TranslatedText>Subject Identifier for the Study</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RFSTDTC" Name="RFSTDTC" DataType="datetime" SASFieldName="RFSTDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Subject Reference Start Date/Time</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RFENDTC" Name="RFENDTC" DataType="datetime" SASFieldName="RFENDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Subject Reference End Date/Time</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RFXSTDTC" Name="RFXSTDTC" DataType="datetime"
+                  SASFieldName="RFXSTDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of First Study Treatment</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RFXENDTC" Name="RFXENDTC" DataType="datetime"
+                  SASFieldName="RFXENDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of Last Study Treatment</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RFICDTC" Name="RFICDTC" DataType="datetime" Length="10"
+                  SASFieldName="RFICDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of Informed Consent</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RFPENDTC" Name="RFPENDTC" DataType="datetime" Length="10"
+                  SASFieldName="RFPENDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of End of Participation</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.DTHDTC" Name="DTHDTC" DataType="datetime" Length="10"
+                  SASFieldName="DTHDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of Death</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.DTHFL" Name="DTHFL" DataType="text" Length="1" SASFieldName="DTHFL">
+            <Description>
+               <TranslatedText>Subject Death Flag</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.DTHFL"/>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.SITEID" Name="SITEID" DataType="text" Length="6"
+                  SASFieldName="SITEID">
+            <Description>
+               <TranslatedText>Study Site Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.INVNAM" Name="INVNAM" DataType="text" Length="15"
+                  SASFieldName="INVNAM">
+            <Description>
+               <TranslatedText>Investigator Name</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.BRTHDTC" Name="BRTHDTC" DataType="datetime" SASFieldName="BRTHDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of Birth</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.AGE" Name="AGE" DataType="integer" Length="8" SASFieldName="AGE"
+                  def:DisplayFormat="BEST12.">
+            <Description>
+               <TranslatedText>Age</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.AGEU" Name="AGEU" DataType="text" Length="7" SASFieldName="AGEU"
+                  def:DisplayFormat="$7.">
+            <Description>
+               <TranslatedText>Age Units</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.AGEU"/>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.SEX" Name="SEX" DataType="text" Length="3" SASFieldName="SEX"
+                  def:DisplayFormat="$3.">
+            <Description>
+               <TranslatedText>Sex</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.SEX"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.RACE" Name="RACE" DataType="text" Length="27" SASFieldName="RACE"
+                  def:DisplayFormat="$27.">
+            <Description>
+               <TranslatedText>Race</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.RACE"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.COUNTRY" Name="COUNTRY" DataType="text" Length="5"
+                  SASFieldName="COUNTRY"
+                  def:DisplayFormat="$5.">
+            <Description>
+               <TranslatedText>Country</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.COUNTRY"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ETHNIC" Name="ETHNIC" DataType="text" Length="12"
+                  SASFieldName="ETHNIC">
+            <Description>
+               <TranslatedText>Ethnicity</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.ETHNIC"/>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ARMCD" Name="ARMCD" DataType="text" Length="5" SASFieldName="ARMCD"
+                  def:DisplayFormat="$5.">
+            <Description>
+               <TranslatedText>Planned Arm Code</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ARM" Name="ARM" DataType="text" Length="12" SASFieldName="ARM"
+                  def:DisplayFormat="$12.">
+            <Description>
+               <TranslatedText>Description of Planned Arm</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.ARM"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ACTARMCD" Name="ACTARMCD" DataType="text" Length="5"
+                  SASFieldName="ACTARMCD">
+            <Description>
+               <TranslatedText>Actual Arm Code</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.ACTARMCD"/>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ACTARM" Name="ACTARM" DataType="text" Length="12"
+                  SASFieldName="ACTARM">
+            <Description>
+               <TranslatedText>Description of Actual Arm</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.ACTARM"/>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.TRTSDTC" Name="TRTSDTC" DataType="datetime" SASFieldName="TRTSDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of First Exposure to Treatment</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.TRTENDTC" Name="TRTENDTC" DataType="datetime"
+                  SASFieldName="TRTENDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of Last Exposure to Treatment</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.DMDTC" Name="DMDTC" DataType="datetime" SASFieldName="DMDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Date/Time of Collection</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ARMNRS" Name="ARMNRS" DataType="text" Length="200"
+                  SASFieldName="ARMNRS"
+                  def:DisplayFormat="$200.">
+            <Description>
+               <TranslatedText>Reason Arm and/or Actual Arm is Null</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.DM.ACTARMRS" Name="ACTARMRS" DataType="text" Length="200"
+                  SASFieldName="ACTARMRS"
+                  def:DisplayFormat="$200.">
+            <Description>
+               <TranslatedText>Reason Actual Arm is Null</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.STUDYID" Name="STUDYID" DataType="text" Length="14"
+                  SASFieldName="STUDYID"
+                  def:DisplayFormat="$14.">
+            <Description>
+               <TranslatedText>Study Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.DOMAIN" Name="DOMAIN" DataType="text" Length="4"
+                  SASFieldName="DOMAIN"
+                  def:DisplayFormat="$4.">
+            <Description>
+               <TranslatedText>Domain Abbreviation</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.USUBJID" Name="USUBJID" DataType="text" Length="30"
+                  SASFieldName="USUBJID">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AESEQ" Name="AESEQ" DataType="integer" Length="8"
+                  SASFieldName="AESEQ">
+            <Description>
+               <TranslatedText>Sequence Number</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AETERM" Name="AETERM" DataType="text" Length="10"
+                  SASFieldName="AETERM"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Reported Term for the Adverse Event</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AESTDTC" Name="AESTDTC" DataType="datetime" SASFieldName="AESTDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Start Date/Time of Adverse Event</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEENDTC" Name="AEENDTC" DataType="datetime" SASFieldName="AEENDTC"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>End Date/Time of Adverse Event</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AESTDY" Name="AESTDY" DataType="integer" Length="8"
+                  SASFieldName="AESTDY"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Study Day of Start of AE</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEENDY" Name="AEENDY" DataType="integer" Length="8"
+                  SASFieldName="AEENDY"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Study Day of End of AE</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AESER" Name="AESER" DataType="text" Length="3" SASFieldName="AESER"
+                  def:DisplayFormat="$3.">
+            <Description>
+               <TranslatedText>Serious Event</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AESEV" Name="AESEV" DataType="text" Length="10" SASFieldName="AESEV"
+                  def:DisplayFormat="$10.">
+            <Description>
+               <TranslatedText>Severity/Intensity</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.AESEV"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEOUT" Name="AEOUT" DataType="text" Length="15" SASFieldName="AEOUT"
+                  def:DisplayFormat="$15.">
+            <Description>
+               <TranslatedText>Outcome of Adverse Event</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.AEOUT"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEACN" Name="AEACN" DataType="text" Length="16" SASFieldName="AEACN"
+                  def:DisplayFormat="$16.">
+            <Description>
+               <TranslatedText>Action Taken with Study Treatment</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.AEACN"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEREL" Name="AEREL" DataType="text" Length="18" SASFieldName="AEREL"
+                  def:DisplayFormat="$18.">
+            <Description>
+               <TranslatedText>Causality</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.AEREL"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEPRESP" Name="AEPRESP" DataType="text" Length="9"
+                  SASFieldName="AEPRESP"
+                  def:DisplayFormat="$9.">
+            <Description>
+               <TranslatedText>Present at Screening</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AEONGO" Name="AEONGO" DataType="text" Length="1"
+                  SignificantDigits=" "
+                  SASFieldName="AEONGO"
+                  def:DisplayFormat=" "
+                  def:CommentOID="COM. ">
+            <Description>
+               <TranslatedText>Ongoing AE Flag</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.AE.AETOXGR" Name="AETOXGR" DataType="text" Length="5"
+                  SASFieldName="AETOXGR">
+            <Description>
+               <TranslatedText>Toxicity Grade (if used)</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.STUDYID" Name="STUDYID" DataType="text" Length="14"
+                  SASFieldName="STUDYID"
+                  def:DisplayFormat="$14.">
+            <Description>
+               <TranslatedText>Study Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.DOMAIN" Name="DOMAIN" DataType="text" Length="4"
+                  SASFieldName="DOMAIN"
+                  def:DisplayFormat="$4.">
+            <Description>
+               <TranslatedText>Domain Abbreviation</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.USUBJID" Name="USUBJID" DataType="text" Length="30"
+                  SASFieldName="USUBJID">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSSEQ" Name="VSSEQ" DataType="integer" Length="8"
+                  SASFieldName="VSSEQ">
+            <Description>
+               <TranslatedText>Sequence Number</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSTESTCD" Name="VSTESTCD" DataType="text" Length="6"
+                  SASFieldName="VSTESTCD"
+                  def:DisplayFormat="$6.">
+            <Description>
+               <TranslatedText>Vital Signs Test Short Name</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.VSTESTCD"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSTEST" Name="VSTEST" DataType="text" Length="19"
+                  SASFieldName="VSTEST"
+                  def:DisplayFormat="$19.">
+            <Description>
+               <TranslatedText>Vital Signs Test Name</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.VSTEST"/>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSORRES" Name="VSORRES" DataType="text" Length="10"
+                  SASFieldName="VSORRES">
+            <Description>
+               <TranslatedText>Result or Finding in Original Units</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSORRESU" Name="VSORRESU" DataType="text" Length="5"
+                  SASFieldName="VSORRESU"
+                  def:DisplayFormat="$5.">
+            <Description>
+               <TranslatedText>Original Units</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSSTRESC" Name="VSSTRESC" DataType="text" Length="10"
+                  SASFieldName="VSSTRESC">
+            <Description>
+               <TranslatedText>Character Result/Finding in Std Format</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSSTRESN" Name="VSSTRESN" DataType="float" Length="3"
+                  SignificantDigits="1"
+                  SASFieldName="VSSTRESN"
+                  def:DisplayFormat="BEST5.">
+            <Description>
+               <TranslatedText>Numeric Result/Finding in Std Format</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSSTRESU" Name="VSSTRESU" DataType="text" Length="10"
+                  SASFieldName="VSSTRESU">
+            <Description>
+               <TranslatedText>Standard Units</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSSTAT" Name="VSSTAT" DataType="text" Length="10"
+                  SASFieldName="VSSTAT">
+            <Description>
+               <TranslatedText>Completion Status</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.VSSTAT"/>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSREASND" Name="VSREASND" DataType="text" Length="100"
+                  SASFieldName="VSREASND">
+            <Description>
+               <TranslatedText>Reason Not Done</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSDTC" Name="VSDTC" DataType="datetime" SASFieldName="VSDTC">
+            <Description>
+               <TranslatedText>Date/Time of Measurement</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSDY" Name="VSDY" DataType="integer" Length="8" SASFieldName="VSDY"
+                  def:DisplayFormat="BEST12.">
+            <Description>
+               <TranslatedText>Study Day of Measurement</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VISITNUM" Name="VISITNUM" DataType="integer" Length="8"
+                  SASFieldName="VISITNUM"
+                  def:DisplayFormat="BEST12.">
+            <Description>
+               <TranslatedText>Visit Number</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VISIT" Name="VISIT" DataType="text" Length="8" SASFieldName="VISIT"
+                  def:DisplayFormat="$8.">
+            <Description>
+               <TranslatedText>Visit Name</TranslatedText>
+            </Description>
+            <def:Origin Type="CRF"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSBLFL" Name="VSBLFL" DataType="text" Length="1"
+                  SASFieldName="VSBLFL">
+            <Description>
+               <TranslatedText>Baseline Flag</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.VSBLFL"/>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSLOC" Name="VSLOC" DataType="text" Length="20" SASFieldName="VSLOC">
+            <Description>
+               <TranslatedText>Location of Measurement</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.VS.VSNAM" Name="VSNAM" DataType="text" Length="50" SASFieldName="VSNAM">
+            <Description>
+               <TranslatedText>Name of Evaluator or Measurement Method</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.STUDYID" Name="STUDYID" DataType="text" Length="14"
+                  SASFieldName="STUDYID"
+                  def:DisplayFormat="$14.">
+            <Description>
+               <TranslatedText>Study Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.RDOMAIN" Name="RDOMAIN" DataType="text" Length="2"
+                  SASFieldName="RDOMAIN">
+            <Description>
+               <TranslatedText>Related Domain Abbreviation</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.USUBJID" Name="USUBJID" DataType="text" Length="30"
+                  SASFieldName="USUBJID">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.IDVAR" Name="IDVAR" DataType="text" Length="6"
+                  SASFieldName="IDVAR">
+            <Description>
+               <TranslatedText>Identifying Variable</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.IDVARVAL" Name="IDVARVAL" DataType="text" Length="10"
+                  SASFieldName="IDVARVAL">
+            <Description>
+               <TranslatedText>Identifying Variable Value</TranslatedText>
+            </Description>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.QNAM" Name="QNAM" DataType="text" Length="8" SASFieldName="QNAM">
+            <Description>
+               <TranslatedText>Qualifier Variable Name</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.QLABEL" Name="QLABEL" DataType="text" Length="40"
+                  SASFieldName="QLABEL">
+            <Description>
+               <TranslatedText>Qualifier Variable Label</TranslatedText>
+            </Description>
+            <def:Origin Type="Assigned"/>
+         </ItemDef>
+         <ItemDef OID="IT.SUPPAE.QVAL" Name="QVAL" DataType="text" Length="100"
+                  SASFieldName="QVAL">
+            <Description>
+               <TranslatedText>Data Value</TranslatedText>
+            </Description>
+            <CodeListRef CodeListOID="CL.QVAL"/>
+            <def:Origin Type="Derived"/>
+         </ItemDef>
+         <CodeList OID="CL.ACTARM" Name="ACTARM" DataType="text">
+            <CodeListItem CodedValue="Placebo" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Placebo</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="ViralBlock" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>ViralBlock</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.ACTARMCD" Name="ACTARMCD" DataType="text">
+            <CodeListItem CodedValue="PBO" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Placebo</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="VRB" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>ViralBlock</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.AEACN" Name="AEACN" DataType="text">
+            <CodeListItem CodedValue="DOSE REDUCED" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Dose Reduced</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="DRUG WITHDRAWN" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Drug Withdrawn</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="NONE" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>None</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.AEOUT" Name="AEOUT" DataType="text">
+            <CodeListItem CodedValue="NOT RECOVERED" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Not Recovered</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="RECOVERED" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Recovered</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="RECOVERING" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>Recovering</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.AEREL" Name="AEREL" DataType="text">
+            <CodeListItem CodedValue="NOT RELATED" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Not Related</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="POSSIBLY RELATED" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Possibly Related</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="RELATED" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>Related</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.AESER" Name="AESER" DataType="text">
+            <CodeListItem CodedValue="N" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>No</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Y" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Yes</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.AESEV" Name="AESEV" DataType="text">
+            <CodeListItem CodedValue="MILD" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Mild</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="MODERATE" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Moderate</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="SEVERE" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>Severe</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.AGEU" Name="AGEU" DataType="text">
+            <CodeListItem CodedValue="YEARS" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Years</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.ARM" Name="ARM" DataType="text">
+            <CodeListItem CodedValue="Placebo" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Placebo</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="ViralBlock" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>ViralBlock</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.COUNTRY" Name="COUNTRY" DataType="text">
+            <CodeListItem CodedValue="DEU" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Germany</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="FRA" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>France</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="ITA" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>Italy</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="USA" OrderNumber="4">
+               <Decode>
+                  <TranslatedText>United States</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.DTHFL" Name="DTHFL" DataType="text">
+            <CodeListItem CodedValue="" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Missing</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Y" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Yes (Death Flag)</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.ETHNIC" Name="ETHNIC" DataType="text">
+            <CodeListItem CodedValue="UNKNOWN" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Unknown</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.QVAL" Name="QVAL" DataType="text">
+            <CodeListItem CodedValue="Gastrointestinal disorders" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Gastrointestinal disorders</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="General disorders and administration site conditions"
+                          OrderNumber="2">
+               <Decode>
+                  <TranslatedText>General disorders and administration site conditions</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Nervous system disorders" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>Nervous system disorders</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Respiratory disorders" OrderNumber="4">
+               <Decode>
+                  <TranslatedText>Respiratory disorders</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Skin and subcutaneous tissue disorders" OrderNumber="5">
+               <Decode>
+                  <TranslatedText>Skin and subcutaneous tissue disorders</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.RACE" Name="RACE" DataType="text">
+            <CodeListItem CodedValue="Asian" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Asian</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Black or African American" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Black or African American</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Other" OrderNumber="3">
+               <Decode>
+                  <TranslatedText>Other</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="White" OrderNumber="4">
+               <Decode>
+                  <TranslatedText>White</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.SEX" Name="SEX" DataType="text">
+            <CodeListItem CodedValue="F" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Female</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="M" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Male</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.VSBLFL" Name="VSBLFL" DataType="text">
+            <CodeListItem CodedValue="" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Missing</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Y" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Yes (Baseline Flag)</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.VSSTAT" Name="VSSTAT" DataType="text">
+            <CodeListItem CodedValue="" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Missing</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.VSTEST" Name="VSTEST" DataType="text">
+            <CodeListItem CodedValue="Oxygen Saturation" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Oxygen Saturation</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="Body Temperature" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Body Temperature</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <CodeList OID="CL.VSTESTCD" Name="VSTESTCD" DataType="text">
+            <CodeListItem CodedValue="SPO2" OrderNumber="1">
+               <Decode>
+                  <TranslatedText>Oxygen Saturation</TranslatedText>
+               </Decode>
+            </CodeListItem>
+            <CodeListItem CodedValue="TEMP" OrderNumber="2">
+               <Decode>
+                  <TranslatedText>Body Temperature</TranslatedText>
+               </Decode>
+            </CodeListItem>
+         </CodeList>
+         <MethodDef OID="MT.AE001" Name="USUBJID" Type="Derived">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">catx('-', STUDYID, SUBJID)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.AE002" Name="AESEQ" Type="Derived">
+            <Description>
+               <TranslatedText>Sequence Number</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">Assigned sequentially by USUBJID</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.AE003" Name="AESTDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Start Date/Time of Adverse Event</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">put(AESTDTC_num, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.AE004" Name="AEENDTC" Type="Derived">
+            <Description>
+               <TranslatedText>End Date/Time of Adverse Event</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">put(AEENDTC_num, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.AE005" Name="AESTDY" Type="Derived">
+            <Description>
+               <TranslatedText>Study Day of Start of AE</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">AESTDT - '01JAN2023'd + 1</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.AE006" Name="AEENDY" Type="Derived">
+            <Description>
+               <TranslatedText>Study Day of End of AE</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">AEENDT - '01JAN2023'd + 1</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.AE017" Name="AEONGO" Type="Derived">
+            <Description>
+               <TranslatedText>Ongoing AE Flag</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="AE">if upcase(AEENRF)="ONGOING" then "Y"</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM001" Name="USUBJID" Type="Derived">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">catx('-', STUDYID, SUBJID)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM002" Name="SUBJID" Type="Derived">
+            <Description>
+               <TranslatedText>Subject Identifier for the Study</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">substr(USUBJID_OLD, 5)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM003" Name="RFSTDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Subject Reference Start Date/Time</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">put(TRTSDT, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM004" Name="RFENDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Subject Reference End Date/Time</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">put(TRTENDT, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM005" Name="RFXSTDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of First Study Treatment</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Set equal to TRTSDTC</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM006" Name="RFXENDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of Last Study Treatment</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Set equal to TRTENDTC</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM007" Name="BRTHDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of Birth</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">intnx('year', TRTSDT, -AGE, 's'); format with put(..., yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM008" Name="ACTARMCD" Type="Derived">
+            <Description>
+               <TranslatedText>Actual Arm Code</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Copied from ARMCD</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM009" Name="ACTARM" Type="Derived">
+            <Description>
+               <TranslatedText>Description of Actual Arm</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Copied from ARM</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM010" Name="TRTSDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of First Exposure to Treatment</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">put(TRTSDT, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM011" Name="TRTENDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of Last Exposure to Treatment</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">put(TRTENDT, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM012" Name="DMDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of Collection</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Set equal to TRTSDTC</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM013" Name="ARMNRS" Type="Derived">
+            <Description>
+               <TranslatedText>Reason Arm and/or Actual Arm is Null</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Derived from ARM, ACTARM, and SCRFL based on predefined logic</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.DM014" Name="ACTARMRS" Type="Derived">
+            <Description>
+               <TranslatedText>Reason Actual Arm is Null</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="DM">Derived from ARM, ACTARM, and SCRFL; renamed for XPT length limit</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.SUPPAE001" Name="USUBJID" Type="Derived">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="SUPPAE">catx('-', STUDYID, SUBJID) from AE</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.SUPPAE002" Name="IDVARVAL" Type="Derived">
+            <Description>
+               <TranslatedText>Identifying Variable Value</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="SUPPAE">put(AESEQ, best.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.SUPPAE003" Name="QVAL" Type="Derived">
+            <Description>
+               <TranslatedText>Data Value</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="SUPPAE">Taken from AESOC in AE</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS001" Name="USUBJID" Type="Derived">
+            <Description>
+               <TranslatedText>Unique Subject Identifier</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">catx('-', STUDYID, SUBJID)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS002" Name="VSSEQ" Type="Derived">
+            <Description>
+               <TranslatedText>Sequence Number</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">Sequence by USUBJID, assigned incrementally</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS003" Name="VSSTRESC" Type="Derived">
+            <Description>
+               <TranslatedText>Character Result/Finding in Std Format</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">Set equal to VSORRES</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS004" Name="VSSTRESN" Type="Derived">
+            <Description>
+               <TranslatedText>Numeric Result/Finding in Std Format</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">Parsed from VSORRES using input(..., best.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS005" Name="VSSTRESU" Type="Derived">
+            <Description>
+               <TranslatedText>Standard Units</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">Derived from logic on VSTESTCD</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS006" Name="VSDTC" Type="Derived">
+            <Description>
+               <TranslatedText>Date/Time of Measurement</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">put(VSDTC_num, yymmdd10.)</FormalExpression>
+         </MethodDef>
+         <MethodDef OID="MT.VS007" Name="VSBLFL" Type="Derived">
+            <Description>
+               <TranslatedText>Baseline Flag</TranslatedText>
+            </Description>
+            <def:DocumentRef leafID="LF.SDTM Mapping Spec"/>
+            <FormalExpression Context="VS">Set to "Y" when VISITNUM = 1</FormalExpression>
+         </MethodDef>
+      </MetaDataVersion>
+   </Study>
+</ODM>
