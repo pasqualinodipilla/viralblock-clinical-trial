@@ -102,7 +102,7 @@ The scripts used to generate the simulated datasets reflecting CDASH standards a
 
 ---
 
-## Adverse Event Descriptive Analysis (ricorda di vederlo in adam)
+## Adverse Event Descriptive Analysis (ricorda di vederlo in adam e cancellare questo)
 
 The script '5_analysis/pre_adam/r/describe_ae.R' produces:
 - AE counts by treatment group
@@ -118,7 +118,7 @@ Output saved in 'outputs/' and '5_visualizations/ae_term_barplot.png' (see corre
 
 This folder contains the full SDTM implementation for the mock clinical study `VIRALBLOCK01`. It includes SAS scripts, generated SDTM datasets, and validation outputs from Pinnacle 21.
 
-### 📁 Subfolders
+###  Subfolders
 
 - `data/`  
   Contains all SDTM datasets exported in both `.csv` and `.xpt` (SAS Transport) formats.  
@@ -143,7 +143,7 @@ This folder contains the full SDTM implementation for the mock clinical study `V
 3. Use `define.xml` and `define.xlsx` for regulatory submission structure or metadata inspection.
 4. Check `pinnacle21-report-sdtm.xlsx` for validation results and compliance notes.
 
-### 📋 Disclaimer
+###  Disclaimer
 
 This is a mock SDTM conversion project designed for learning and portfolio purposes. No proprietary or patient data is included.
 
@@ -311,137 +311,161 @@ All validation issues mentioned above are consistent with the scope of a trainin
 This project is not intended for regulatory submission, but it is intended to showcase data structuring skills in SDTM format and familiarity with clinical standards and tools. All data is synthetic and does not represent real patients or studies.
 
 ---
+## Dataset: ADSL (Subject-Level Analysis Dataset)
 
-## Statistical Analyses (SAS, Pre-ADam Phase)
+### 📜 Purpose
+Builds the master subject-level ADaM dataset from SDTM Demographics (`DM`).
 
-This section contains standard statistical analysis conducted directly on SDTM-like datasets, before the creation of ADaM datasets.
+### 📥 Inputs
+| File    | Location         | Role                                  |
+|---------|------------------|---------------------------------------|
+| `dm.csv`| `3_adam/data/`   | Demographics source (SDTM-style CSV)  |
 
-### 1. T-test on Oxygen Saturation (Day 28)
-- **Script:** 't_test_o2sat_export.sas'
-- **Location:** '5_analysis/pre_adam/sas/'
-- **Description:** Performs a two-sample t-test comparing oxygen saturation (O2SAT) at Day 28 between treatment arms (Viralblock vs Placebo).
-- **Output:**
-  - Summary statistics
-  - Confidence interval
-  - Diagnostic plots (boxplots, histograms)
-- **Exported to**:
-  - 't_test_full_output.pdf'
-  - 't_test_full_output.rtf
+### ⚙️ Key Steps
+1. **Date conversion** – transforms ISO-8601 text dates (`TRTSDTC`, `TRTENDTC`, `BRTHDTC`) into numeric SAS dates (`TRTSDT`, `TRTEDT`, `BRTHDT`).  
+2. **Population flags** – derives  
+   * `SAFFL = "Y"` if `TRTSDT` exists (safety population)  
+   * `ITTFL = "Y"`, `EFFFL = "Y"` for every subject (simplified rule).  
+3. **Variable ordering** – reorders variables to standard ADaM ADSL layout.  
+4. **XPT compatibility** – renames `ACTARMNRS` → `ACTARMRS` before export.
 
-### 2. **ANCOVA - O2SAT at Day 28 Adjusted for baseline**
-- **Script:** 'ancova_o2sat.sas'
-- **Location:** '5_analysis/pre_adam/sas/'
-- **Dataset:** Merged subset of 'vitals' for day 1 and day 28
-- **Method:** 'PROC GLM'
-- **Model:** 'O2SAT_28 ~ ARMCD + O2SAT_BL'
-- **Output:**
-  - 'ancova_o2sat.pdf'
-  - 'ancova_o2sat.rtf'
+### 🧾 Outputs
+| File        | Location        | Format |
+|-------------|-----------------|--------|
+| `adsl.csv`  | `3_adam/data/`  | CSV    |
+| `adsl.xpt`  | `3_adam/data/`  | XPT    |
 
-### 3. **Logistic regression - Serious Adverse Events (AESER)**
-- **Script:** 'logistic_aeser.sas'
-- **Location:**: '5_analysis/pre_adam/sas/'
-- **Dataset:** 'ae_sdtm'
-- **Method:** 'PROC LOGISTIC'
-- **Model:** 'AESER (event="Y") ~ ARMCD'
-- **Output:**
-  - 'logistic_aeser.pdf'
-  - 'logistic_aeser.rtf'
-  
+### 📎 Notes
+* Flags are intentionally simplified for demonstration; real studies should derive populations per protocol.  
+* All data are **synthetic** – no real patient information is included.
+
+
+## Dataset: ADVS (Vital Signs)
+
+### 📜 Description
+This script creates the `ADVS` (Analysis Dataset for Vital Signs) by merging SDTM-like `VS` data with treatment assignments from `ADSL`. It prepares a structured ADaM-compliant dataset ready for statistical analysis.
+
+### 📥 Input
+- `vs.csv` — Vital Signs dataset (SDTM-like), located in `3_adam/data/`
+- `adsl.csv` — Subject-level data for treatment arm info
+
+### ⚙️ Key Processing Steps
+- Merges `VS` with `ADSL` to bring in `TRTA` (actual treatment arm)
+- Derives key ADaM variables:
+  - `PARAMCD` / `PARAM` from `VSTESTCD` / `VSTEST`
+  - `AVAL` / `AVALC` from standard result fields
+  - `ABLFL` (baseline flag) from `VSBLFL`
+  - `AVISIT`, `AVISITN` from visit info
+  - `ADT` as formatted analysis date from `VSDTC`
+- Applies CDISC-compliant labeling and variable order
+
+### 🧾 Output
+- `advs.csv` → saved to `3_adam/data/`
+- `advs.xpt` → saved to `3_adam/data/`
+
+### 📎 Notes
+- Assumes `VSDTC` is in `YYYY-MM-D
+
+
+## Dataset: ADAE (Adverse Events)
+
+### 📜 Description
+This script creates the `ADAE` (Analysis Adverse Events) dataset from a raw AE CSV file. It simulates an SDTM-like structure before deriving the analysis-ready dataset.
+
+### 📥 Input
+- `ae.csv` — located in `3_adam/data/`
+- Simulated reference start date: `01JAN2023` (hardcoded for AESTDY/AEENDY calculation)
+
+### ⚙️ Key Processing Steps
+- Renames problematic numeric date variables to avoid conflicts
+- Creates SDTM-style AE dataset (`ae_sdtm`) with:
+  - Derived variables: `AESTDTC`, `AEENDTC` (ISO format), `AESTDY`, `AEENDY`
+  - `AEONGO` flag derived from `AEENRF`
+  - Proper formatting and labeling
+- Generates `AESEQ` per subject and sorts events chronologically
+- Reorders variables to match CDISC SDTM specifications
+
+### 🧾 Output
+- `ae.csv` → saved to `3_adam/data/`
+- `ae.xpt` → saved to `3_adam/data/`
+- Frequency tables (not exported)
+
+### 📎 Notes
+- `AESOC` is not part of the main ADAE dataset but extracted separately into SUPPAE
+- The dataset is simulated and not based on real MedDRA-coded terms
+
+## Dataset: SUPPAE (Supplemental Qualifiers for ADAE)
+
+### 📜 Description
+This script generates `SUPPAE`, a supplemental qualifiers dataset for `ADAE`, using the `AESOC` field (System Organ Class) if available.
+
+### 📥 Input
+- Derived from the `ae_final` dataset created during ADAE construction
+- Assumes `AESOC` is present in the original raw AE data
+
+### ⚙️ Key Processing Steps
+- Constructs SUPP domain fields: `QNAM`, `QLABEL`, `QVAL` for `AESOC`
+- Links each record to `ADAE` using `USUBJID` + `AESEQ`
+- Retains only supplemental records with non-missing `AESOC`
+
+### 🧾 Output
+- `suppae.csv` → saved to `3_adam/data/`
+- `suppae.xpt` → saved to `3_adam/data/`
+- Frequency count of `QVAL` for `AESOC`
+
+### 📎 Notes
+- This dataset is required to maintain standard traceability for supplemental terms not included in the core `ADAE`
+- Used for structured representation of MedDRA SOC if available
+
+---
+## 🧪 Pinnacle 21 Validation Summary (ADaM Datasets)
+
+This project includes a simulated ADaM package created for educational and portfolio purposes. The datasets were validated using **Pinnacle 21 Community**, configured for **ADaM-IG 1.3 (FDA)**.
+
+### ✅ Validation Results
+
+- All `.xpt` datasets were successfully processed with **no rejections**.
+- The following ADaM domains were included:
+  - `ADSL` (Subject-Level Analysis Dataset)
+  - `ADAE` (Adverse Events Dataset)
+  - `ADVS` (Vital Signs Dataset)
+  - `SUPPAE` (Supplemental Qualifiers for ADAE)
+
+### ⚠️ Known Issues (Expected in a Simulated Context)
+
+| Issue Category      | Description                                                                                         | Acceptable in Simulated Data? |
+|---------------------|-----------------------------------------------------------------------------------------------------|-------------------------------|
+| **Missing Traceability Checks** | Warnings about missing SDTM datasets (e.g., `DM`, `AE`, `EX`) prevent traceability rules from executing. | ✅ Yes — SDTM is not included in this project.part |
+| **Controlled Terminology (CT) Errors** | Terms such as `AESER`, `AERESP`, `RACE` are not mapped to CDISC extensible codelists (e.g., MedDRA). | ✅ Yes — MedDRA is proprietary and not used in simulated datasets. |
+| **Missing Required Variables** | Some required ADaM variables (e.g., `AEHLT`, `AEPTCD`, `AETOXGR`) are not present.                            | ✅ Yes — Dataset scope is limited for simplicity. |
+| **Variable Label/Type Mismatches** | Minor mismatches between dataset variable names/types and ADaM-IG expectations.                           | ✅ Yes — Not impactful for the demo objective. |
+| **Length Warnings** | Variable length exceeds observed value length (e.g., `length too long for actual data`).           | ✅ Yes — Result of fixed-length assignment in simulated data. |
+
+### 📝 Disclaimer
+
+This ADaM package is **not regulatory-grade** and is not intended for submission. It is a learning tool and demonstration of:
+- ADaM structure and standards
+- Use of Pinnacle 21 validation
+- How to interpret and document validation outputs in a real-world workflow
+
+No proprietary or clinical data is used — all records are **synthetic and randomly generated**.
+
 ---
 
-### Outputs
-All output files from SAS analysis are stored in '5_analysis/pre_adam/output/'.
-
-## ADaM Datasets
-
-This section included scripts to derive  ADaM-compliant datasets for the clinical trial.
----
-
-### 'generate_adsl.R'
-
-**Description**: Derives the ADSL dataset (Subject-Level Analysis Dataset) from patient-level information
-**Source**: '1_raw_data/simulated/patients.csv'
-**Output**: '4_adam/data/adsl.csv'
-
-**key variables**:
-- 'STUDYID': Study identifier ("VIRALBLOCK01")
-- 'USUBJID': Unique subject identifier
-- 'SEX', 'AGE': Subject demographics
-- 'AGEGR1': Age group category ("<40", "40-60", ">60")
-- 'RACE': Race category (randomly assigned)
-- 'ARMCD': Treatment group code
-- 'TRTSDT': Treatment start date (randomized = 2 days)
-- 'TRTEDT': Treatment end date (28 days after 'TRTSDT')
-- 'ITTFL': ITT (Intent-to-Treat) flag
-- 'SAFFL': Safety population flag
-
-**Script path**: '4_adam/R/generate_adsl.R'
-
----
-
-### 'generate_advs.R'
-
-**Description**: Derives the ADVS dataset (Analysis Dataset for Vital Signs).
-**Source**: '1_raw_data/simulated/vitals.csv'
-**Output**: '4_adam/data/advs.csv'
-
-**Key variables**
-- 'PARAM', 'PARAMCD': Vital signs parameter (e.g., "O2 Saturation")
-- 'AVISIT': Visit label (e.g., "Day 1", "Day 28")
-- 'AVAL': Actual measurement value
-- 'ANL01FL': Analysis flag for visits of interest (e.g., Day 1 or 28)
-
-**Script path**: '4_adam/R/generate_advs.R'
-
----
-
-## ADaM-Based Analysis
-
-**Location:** '5_analysis/adam/'
-
-### SAS Scripts
-- 'sas/ttest_advs.sas':
-  Performs a two-sample t-test comparing oxygen saturation (O2SAT) at **Day 28** using ADaM-formatted vitals and subject-level data ('advs.csv', 'adsl.csv').
-  **Subset:** 'PARAMCD == "O2SAT"' and 'AVISIT == "Day 28"'
-  **Output**:
-  - 'output/ttest_output.pdf'
-  - 'output/ttest_output.rtf'
-  
-- 'sas/ancova_analysis_adam.sas':
-  Evaluates O2SAT at Day 28 adjusted for baseline using ADaM data.
-  **Model:** 'O2SAT_Day_28 ~ ARMCD + O2SAT_Baseline'
-  **Output:**
-  - 'output/ancova_output.pdf'
-  - 'output/ancova_output.rtf'
-  
-- 'sas/logistic_o2sat_day28.sas':
-  Logistic regression to evaluate treatment effect on hypoxemia (O2SAT < 90%) at Day 28.
-  **Outcome**: 'hypo_flag' = 1 if 'O2SAT <= 90' at Day 28
-  **Output**:
-  - 'output/logistic_output.pdf'
-  - 'output/logistic_output.rtf'
-  
----
-
-## 5_visualizations
-
-This section includes graphical summaries to support the interpretation of clinical trial results.
-
-### Available plots
+### Available plots (poi da cancellare)
 
 - 'ae_term_barplot.png':
   Barplot showing the distribution of Adverse Events (AEs) by event term and treatment group.
   Useful to visually compare frequency and severity across groups.
 
 ---
-## outputs
+## outputs (poi da cancellare)
 
 **Folder:** 'outputs/ae_summary_tables/'
 
 This folder contains summary tables derived from Adverse Events (AE) data. These tables support downstream reporting and visualization activities.
 
-### Available Files
+### Available Files (poi da cancellare)
 
 - 'ae_severity_distribution.csv':
   Summary of adverse events by severity level across all treatment groups.
