@@ -6,10 +6,10 @@ A realistic simulation of a randomized clinical trial evaluating the effectivene
 
 - Simulate a **clinical trial** with random assignment to Placebo or Viralblock
 - Generate **realistic CDISC-style datasets**
-- Apply statistical analysis using **R, SAS and SQL**
+- Apply statistical analysis using **R and SAS**
 
 ## 1_raw_data/
-This folder contains raw data used as input for the clinical trial simulation and future comparison with real-world data.
+This folder contains raw data used as input for the clinical trial simulation.
 
 ### Simulated Datasets (location: '1_raw_data/simulated')
 
@@ -319,7 +319,7 @@ Builds the master subject-level ADaM dataset from SDTM Demographics (`DM`).
 ### 📥 Inputs
 | File    | Location         | Role                                  |
 |---------|------------------|---------------------------------------|
-| `dm.csv`| `3_adam/data/`   | Demographics source (SDTM-style CSV)  |
+| `dm.csv`| `2_sdtm/data/`   | Demographics source (SDTM-style CSV)  |
 
 ### ⚙️ Key Steps
 1. **Date conversion** – transforms ISO-8601 text dates (`TRTSDTC`, `TRTENDTC`, `BRTHDTC`) into numeric SAS dates (`TRTSDT`, `TRTEDT`, `BRTHDT`).  
@@ -346,7 +346,7 @@ Builds the master subject-level ADaM dataset from SDTM Demographics (`DM`).
 This script creates the `ADVS` (Analysis Dataset for Vital Signs) by merging SDTM-like `VS` data with treatment assignments from `ADSL`. It prepares a structured ADaM-compliant dataset ready for statistical analysis.
 
 ### 📥 Input
-- `vs.csv` — Vital Signs dataset (SDTM-like), located in `3_adam/data/`
+- `vs.csv` — Vital Signs dataset (SDTM-like), located in `2_sdtm/data/`
 - `adsl.csv` — Subject-level data for treatment arm info
 
 ### ⚙️ Key Processing Steps
@@ -373,7 +373,7 @@ This script creates the `ADVS` (Analysis Dataset for Vital Signs) by merging SDT
 This script creates the `ADAE` (Analysis Adverse Events) dataset from a raw AE CSV file. It simulates an SDTM-like structure before deriving the analysis-ready dataset.
 
 ### 📥 Input
-- `ae.csv` — located in `3_adam/data/`
+- `ae.csv` — located in `2_sdtm/data/`
 - Simulated reference start date: `01JAN2023` (hardcoded for AESTDY/AEENDY calculation)
 
 ### ⚙️ Key Processing Steps
