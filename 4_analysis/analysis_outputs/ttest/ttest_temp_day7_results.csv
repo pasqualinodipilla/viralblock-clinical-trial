@@ -1,0 +1,3 @@
+Variable,Method,Variances,tValue,DF,Probt
+AVAL,Aggregazione,Uguali,6.26,298,<.0001
+AVAL,Satterthwaite,Diverse,6.26,297.91,<.0001

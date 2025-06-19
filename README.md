@@ -102,18 +102,6 @@ The scripts used to generate the simulated datasets reflecting CDASH standards a
 
 ---
 
-## Adverse Event Descriptive Analysis (ricorda di vederlo in adam e cancellare questo)
-
-The script '5_analysis/pre_adam/r/describe_ae.R' produces:
-- AE counts by treatment group
-- Severity breakdown
-- AE × Treatment cross-tab
-- Barplot of AE terms
-
-Output saved in 'outputs/' and '5_visualizations/ae_term_barplot.png' (see correponding sections).
-
----
-
 ## `2_sdtm/` – SDTM Package for VIRALBLOCK01
 
 This folder contains the full SDTM implementation for the mock clinical study `VIRALBLOCK01`. It includes SAS scripts, generated SDTM datasets, and validation outputs from Pinnacle 21.
@@ -452,27 +440,77 @@ No proprietary or clinical data is used — all records are **synthetic and rand
 
 ---
 
-### Available plots (poi da cancellare)
+# 📊 T-Test Analysis – Body Temperature at Day 7
 
-- 'ae_term_barplot.png':
-  Barplot showing the distribution of Adverse Events (AEs) by event term and treatment group.
-  Useful to visually compare frequency and severity across groups.
+This analysis compares the mean body temperature at Day 7 between the **ViralBlock** and **Placebo** arms using a two-sample t-test.  
+The analysis was performed using SAS and follows the standard project structure.
 
 ---
-## outputs (poi da cancellare)
 
-**Folder:** 'outputs/ae_summary_tables/'
+## 🔍 Objective
 
-This folder contains summary tables derived from Adverse Events (AE) data. These tables support downstream reporting and visualization activities.
+To determine whether there is a statistically significant difference in body temperature at Day 7 between the treatment groups.
 
-### Available Files (poi da cancellare)
+---
 
-- 'ae_severity_distribution.csv':
-  Summary of adverse events by severity level across all treatment groups.
-- 'ae_term_by_treatment.csv':
-  Frequency table of AE terms stratified by treatment group.
-- 'ae_total_by_treatment.csv':
-  Total number of adverse events recorded per treatment group.
+## 🧪 Data Input
+
+- `advs.csv`: ADaM Vital Signs dataset
+  - Filtered on `PARAMCD = "TEMP"` and `AVISIT = "Day 7"`
+  - Temperature values stored in `AVAL`
+  - Treatment groups identified by `TRTA`
+
+---
+
+## 💻 Script Location
+
+- `4_analysis/analysis_scripts/ttest_temp_day7.sas`
+
+The script:
+- Imports ADVS data
+- Subsets Day 7 temperature values
+- Performs a two-sample t-test
+- Generates plots and exports both CSV and PDF output
+
+---
+
+## 📤 Output Files
+
+### Intermediate outputs:
+Located in: `4_analysis/analysis_outputs/ttest/`
+
+- `ttest_temp_day7_full.pdf`: PDF with all plots (distribution, boxplot, Q-Q)
+- `ttest_temp_day7_results.csv`: T-test statistics (means, SD, t, p-value, CI)
+
+### Final outputs for mock/SAP reports:
+Located in: `5_results/final_tables_figures/ttest/`
+
+- `ttest_boxplot.pdf`: Boxplot (single-page)
+- `ttest_dist.pdf`: Distribution/histogram
+- `ttest_qq.pdf`: Q–Q plot
+
+---
+
+## 📊 Summary of Results
+
+| Group       | Mean (°C) | SD     | N   |
+|-------------|-----------|--------|-----|
+| Placebo     | 37.86     | 0.28   | 149 |
+| ViralBlock  | 37.65     | 0.29   | 151 |
+
+- **Difference (VRB – PBO)**: –0.21 °C  
+- **95% Confidence Interval**: [–0.27, –0.14]  
+- **t(298) = 6.26**, **p < 0.0001**
+
+**Interpretation**:  
+Subjects treated with ViralBlock had a statistically significant lower mean body temperature at Day 7 compared to placebo.
+
+---
+
+## 📌 Notes
+
+- Final figures and tables are used in the Mock Report.
+- This analysis is referenced in both the Statistical Analysis Plan (SAP) and the final results.
 
 ---
 

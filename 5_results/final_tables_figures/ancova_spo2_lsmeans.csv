@@ -1,0 +1,3 @@
+Effect,Dependent,ARM,LSMean,ProbtDiff
+ARM,change,Placebo,1.36910014,<.0001
+ARM,change,ViralBlock,3.24484093,_
