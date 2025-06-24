@@ -507,6 +507,87 @@ Subjects treated with ViralBlock had a statistically significant lower mean body
 
 ---
 
+## ANCOVA – SpO₂ Change from Baseline to Day 28
+
+This directory contains the SAS script and outputs for an ANCOVA analysis comparing the change in oxygen saturation (SpO₂) from Day 1 (baseline) to Day 28 between treatment arms (Placebo vs ViralBlock).
+
+### Script Location
+- `4_analysis/analysis_scripts/ancova_spo2_day28.sas`: SAS script performing the following steps:
+  - Imports ADSL and ADVS datasets from the ADaM layer.
+  - Extracts SpO₂ values at Day 1 and Day 28.
+  - Calculates individual change from baseline.
+  - Performs ANCOVA with treatment arm, age, and sex as predictors.
+  - Exports:
+    - PDF with all diagnostic and model plots.
+    - CSV with least-squares means (LSMeans) per treatment group.
+
+### Outputs Location
+- `4_analysis/analysis_outputs/ancova/`:
+  - `ancova_spo2_plot.pdf`: Multi-page PDF with all ANCOVA plots and diagnostics.
+  - `ancova_spo2_lsmeans.csv`: Exported LSMeans results including confidence intervals and group differences.
+
+### Results Summary
+- **N = 300** subjects included.
+- **Adjusted mean (LSMean) change** in SpO₂:
+  - Placebo: 1.37 [95% CI: 1.13 ; 1.61]
+  - ViralBlock: 3.24 [95% CI: 3.00 ; 3.49]
+- **Adjusted difference (VRB - PBO)**: **+1.88**, statistically significant (*p* < 0.0001).
+- **Covariate effects**:
+  - Age: Significant (*p* = 0.0238), slight negative association with improvement.
+  - Sex: Not significant (*p* = 0.96).
+
+### Final Figures for Report (in `5_results/final_tables_figures/ancova/`)
+- Individual plots extracted from `ancova_spo2_plot.pdf`, including:
+  - LSMeans summary chart
+  - Residual plots
+  - Diagnostic graphs for model validity
+
+---
+
+## 🧪 Logistic Regression: Probability of Recovery
+
+**Location:**  
+- Script: `4_analysis/analysis_scripts/logistic_recovery.sas`  
+- Outputs: `4_analysis/analysis_outputs/logistic/`  
+- Final results: `5_results/final_tables_figures/logistic/`
+
+### 🎯 Objective
+This analysis models the probability of recovery (`AEOUT = "RECOVERED"`) using logistic regression.  
+The binary outcome variable `RECOVFL` is derived and modeled against key covariates.
+
+### 📈 Method
+- Logistic regression using `PROC LOGISTIC` in SAS.
+- Model:  
+  `RECOVFL ~ ARM + AGE + SEX`  
+  - `ARM`: Treatment group (Placebo vs. Viralblock)  
+  - `AGE`: Continuous covariate  
+  - `SEX`: Categorical covariate
+- Class variables are treated with reference coding (`ref='Placebo'` for ARM).
+- Odds ratios and 95% confidence intervals are reported.
+
+### 📥 Input Datasets
+- `adae.csv`: Adverse Events data
+- `adsl.csv`: Subject-level data (demographics, treatment)
+
+### 📤 Output Files
+
+#### In `4_analysis/analysis_outputs/logistic/`:
+- `logistic_estimates.csv`: Model parameter estimates
+- `logistic_oddsratios.csv`: Odds ratios and 95% confidence intervals
+- `logistic_recovery_plot.pdf`: Plot output (e.g., model diagnostics)
+
+#### In `5_results/final_tables_figures/logistic/`:
+These are the finalized deliverables:
+- `logistic_estimates.csv`
+- `logistic_oddsratios.csv`
+- `logistic_recovery_plot.pdf`
+
+---
+
+📌 *This script is part of the VIRALBLOCK01 analysis pipeline for illustrating statistical analysis in clinical trials.*
+
+
+---
 ## 📌 Notes
 
 - Final figures and tables are used in the Mock Report.
