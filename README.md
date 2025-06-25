@@ -585,7 +585,64 @@ These are the finalized deliverables:
 ---
 
 📌 *This script is part of the VIRALBLOCK01 analysis pipeline for illustrating statistical analysis in clinical trials.*
+---
 
+## 🔍 Survival Analysis – Serious Adverse Events (AESER = "Y")
+
+This module performs a time-to-event (survival) analysis using SAS to compare the occurrence of **serious adverse events (SAEs)** between treatment arms (`Placebo` vs `Viralblock`), using the **Kaplan–Meier method**, **log-rank test**, and **Cox proportional hazards regression**.
+
+---
+
+### ⚙️ Analysis Overview
+
+- **Data Sources**:
+  - `adsl.csv`: Subject-level dataset (ARM, AGE, SEX)
+  - `adae.csv`: Adverse events dataset (AESTDTC, AESER)
+
+- **Steps**:
+  1. Extract earliest serious AE per subject (AESER = "Y")
+  2. Merge with ADSL and define time-to-event from a proxy start date (`01JAN2022`)
+  3. Right-censor subjects with no event at 28 days
+  4. Generate Kaplan–Meier survival curves by treatment arm
+  5. Apply log-rank test for group comparison
+  6. Fit a Cox proportional hazards model adjusted for AGE and SEX
+  7. Generate a forest plot based on hazard ratio estimates
+
+---
+
+### 📁 File Locations
+
+- **Script**:  
+  `4_analysis/analysis_scripts/survival_analysis.sas`
+
+- **Raw Outputs** (intermediate):  
+  `4_analysis/analysis_outputs/survival_analysis/`
+  - `km_survival_plot.pdf`
+  - `cox_model.pdf`
+  - `cox_forest_plot.pdf`
+
+- **Final Results** (for SAP & mock):  
+  `5_results/final_tables_figures/survival_analysis/`
+  - `km_survival_plot.pdf`
+  - `cox_model.pdf`
+  - `cox_forest_plot.pdf`
+
+---
+
+### 📄 Output Files Description
+
+- `km_survival_plot.pdf`: Kaplan–Meier survival curves with at-risk table
+- `cox_model.pdf`: Cox model summary (HR, 95% CI, p-values)
+- `cox_forest_plot.pdf`: Forest plot displaying log(HR) with confidence intervals
+
+---
+
+### 📝 Notes
+
+- Survival time is measured in days from the start date (`01JAN2022`) to the first SAE or censoring.
+- Only the **first serious AE** per subject is considered.
+- If no event occurs, censoring is applied at Day 28.
+- Forest plot is based on `PROC PHREG` output using log-transformed hazard ratios.
 
 ---
 ## 📌 Notes
