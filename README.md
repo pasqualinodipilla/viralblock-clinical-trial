@@ -645,6 +645,38 @@ This module performs a time-to-event (survival) analysis using SAS to compare th
 - Forest plot is based on `PROC PHREG` output using log-transformed hazard ratios.
 
 ---
+### Categorical Analysis (Adverse Events and Recovery Outcomes)
+
+This section includes SAS scripts and outputs related to categorical data analyses, specifically focused on adverse event (AE) presence, AE severity, and recovery outcomes among treatment groups.
+
+**Objectives:**
+- Compare the occurrence of any AE across treatment arms (Placebo vs Viralblock).
+- Assess the distribution of AE severity across treatment arms.
+- Model the multinomial recovery outcomes (RECOVERED, RECOVERING, NOT RECOVERED) based on treatment and patient covariates.
+
+**Analyses performed:**
+1. **Chi-square and Fisher’s exact tests** for:
+   - Presence of at least one AE per subject.
+   - AE severity distribution.
+2. **Multinomial logistic regression** to assess association between recovery status and predictors: treatment arm, age, and sex.
+
+**Script location:**
+- '4_analysis/analysis_scripts/categorical_analysis.sas'
+
+**Output files:**
+Located in both:
+- 4_analysis/analysis_outputs/categorical_analysis/
+- 5_results/final_tables_figures/categorical_analysis/
+
+
+- `chisq_ae_presence.pdf`: Chi-square test results comparing AE presence by treatment group.
+- `chisq_ae_severity.pdf`: Chi-square test results comparing AE severity by treatment group.
+- `multinomial_recovery.pdf`: Output from multinomial logistic regression for recovery status.
+
+**Software used:**  
+SAS 9.4 — statistical analyses and PDF output generation via `PROC FREQ` and `PROC LOGISTIC`.
+
+---
 ## 📌 Notes
 
 - Final figures and tables are used in the Mock Report.
