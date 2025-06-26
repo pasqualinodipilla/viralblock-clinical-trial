@@ -718,6 +718,40 @@ To adjust for baseline imbalances and approximate a randomized comparison betwee
 ### Notes
 
 This approach improves the comparability of treatment arms and supports unbiased estimation of treatment effects in observational comparisons.
+---
+
+## Longitudinal Analysis of SPO2 Over Time
+
+This folder contains the SAS script and outputs for the longitudinal analysis of peripheral oxygen saturation (SPO2) measured at multiple time points across treatment groups (Placebo vs. ViralBlock).
+
+### 📁 Folder Structure
+
+- `4_analysis/analysis_scripts/longitudinal_spo2_analysis.sas`: Main SAS script.
+- `4_analysis/analysis_outputs/longitudinal_analysis/`: Intermediate and raw output PDFs.
+- `5_results/final_tables_figures/longitudinal_analysis/`: Final outputs for reporting.
+
+### 🧪 Description of the Analysis
+
+1. **Data Preparation**
+   - Import ADSL and ADVS datasets.
+   - Filter observations where `PARAMCD = "SPO2"`.
+   - Merge with treatment and demographic information from ADSL.
+
+2. **Repeated Measures ANOVA (RM-ANOVA)**
+   - Transform data into wide format using `PROC TRANSPOSE`.
+   - Run `PROC GLM` with treatment group (ARM) as between-subject factor and time as within-subject factor (5 time points).
+
+3. **Linear Mixed Model (LMM)**
+   - Use long format dataset.
+   - Run `PROC MIXED` including fixed effects for treatment, time (AVISITN), and their interaction.
+   - Specify a compound symmetry covariance structure and estimate using REML.
+
+### 📄 Outputs
+
+- `rmanova_spo2.pdf`: Repeated Measures ANOVA results.
+- `lmm_spo2.pdf`: Linear Mixed Model output.
+
+These analyses assess the treatment effect on SPO2 trajectories over time and help determine if trends differ between Placebo and ViralBlock groups.
 
 
 ---
