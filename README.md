@@ -753,6 +753,53 @@ This folder contains the SAS script and outputs for the longitudinal analysis of
 
 These analyses assess the treatment effect on SPO2 trajectories over time and help determine if trends differ between Placebo and ViralBlock groups.
 
+---
+## PCA and Clustering Analysis on Clinical Data
+
+This script performs **Principal Component Analysis (PCA)** and **K-means clustering** on the clinical trial dataset, focusing on patient age and mean SPO2 measurements across visits.
+
+### Objective
+
+To explore patterns and clusters among patients using two key clinical variables:
+- `AGE`
+- `SPO2_mean` (mean peripheral oxygen saturation)
+
+### Methodology
+
+1. **Data Preparation**:
+   - Import `ADSL` and `ADVS` datasets.
+   - Filter `ADVS` for rows where `PARAMCD == "SPO2"`.
+   - Calculate the mean SPO2 per subject and merge with demographic data (`AGE`).
+
+2. **PCA**:
+   - Standardize AGE and SPO2 values.
+   - Perform PCA using `prcomp()` and visualize with `fviz_pca_biplot()`.
+
+3. **Clustering**:
+   - Apply **K-means clustering** (`k = 2`) to identify patient subgroups.
+   - Visualize results using `fviz_cluster()`.
+
+### Script Location
+
+- `4_analysis/analysis_scripts/pca_clustering.R`
+
+### Output Files
+
+Saved in:
+- `4_analysis/analysis_outputs/pca_clustering/`
+- and in: `5_results/final_tables_figures/pca_clustering/`
+
+| File | Description |
+|------|-------------|
+| `pca_plot.pdf` | PCA biplot of AGE and SPO2 |
+| `cluster_plot.pdf` | Visualization of 2-cluster K-means result |
+
+### Dependencies
+
+This script requires the following R packages:
+- `tidyverse`
+- `cluster`
+- `factoextra`
 
 ---
 ## 📌 Notes
