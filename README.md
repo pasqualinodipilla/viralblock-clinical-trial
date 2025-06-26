@@ -677,6 +677,50 @@ Located in both:
 SAS 9.4 — statistical analyses and PDF output generation via `PROC FREQ` and `PROC LOGISTIC`.
 
 ---
+## Propensity Score Matching (PSM)
+
+This section documents the propensity score matching (PSM) performed to reduce potential confounding between treatment groups (Placebo vs ViralBlock) in the simulated clinical trial.
+
+### Script and Output Locations
+
+- **Script:** `4_analysis/analysis_scripts/psm_analysis.sas`
+- **Outputs:**
+  - Full diagnostics: `4_analysis/analysis_outputs/propensity_score_matching/`
+  - Final figures: `5_results/final_tables_figures/propensity_score_matching/`
+
+### Objective
+
+To adjust for baseline imbalances and approximate a randomized comparison between groups by matching subjects on their estimated propensity to receive treatment (ViralBlock).
+
+### Methodology
+
+1. **Data Import:**
+   - The ADSL dataset was imported and filtered to include only subjects randomized to Placebo or ViralBlock.
+
+2. **Propensity Score Estimation:**
+   - A logistic regression model estimated the probability of being in the ViralBlock group based on covariates: `AGE` and `SEX`.
+
+3. **Matching Procedure:**
+   - 1:1 nearest neighbor matching (greedy algorithm) was applied using the estimated propensity scores.
+
+4. **Diagnostics:**
+   - Covariate balance between groups was assessed using:
+     - Standardized mean differences
+     - Distributions of propensity scores and covariates
+     - LPS (linear predictor score) plots
+
+### Key Output Files
+
+- `ps_model.pdf`: Results of the logistic regression used to estimate the propensity scores.
+- `psm_diagnostics.pdf`: Visual and numeric diagnostics of the matching quality.
+- `matched_dataset`: SAS dataset of matched subjects.
+
+### Notes
+
+This approach improves the comparability of treatment arms and supports unbiased estimation of treatment effects in observational comparisons.
+
+
+---
 ## 📌 Notes
 
 - Final figures and tables are used in the Mock Report.
