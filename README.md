@@ -8,6 +8,14 @@ A realistic simulation of a randomized clinical trial evaluating the effectivene
 - Generate **realistic CDISC-style datasets**
 - Apply statistical analysis using **R and SAS**
 
+## 📄 Documentation
+
+The following project documents are located in the `0_documentation/` folder:
+
+- `SAP.pdf` – Statistical Analysis Plan outlining all planned analyses.
+- `mock.pdf` – Mock shells of tables, figures, and listings for the final report.
+- `report.pdf` – Final summary report including results, interpretations, and conclusions.
+
 ## 1_raw_data/
 This folder contains raw data used as input for the clinical trial simulation.
 
@@ -301,15 +309,15 @@ This project is not intended for regulatory submission, but it is intended to sh
 ---
 ## Dataset: ADSL (Subject-Level Analysis Dataset)
 
-### 📜 Purpose
+### Purpose
 Builds the master subject-level ADaM dataset from SDTM Demographics (`DM`).
 
-### 📥 Inputs
+### Inputs
 | File    | Location         | Role                                  |
 |---------|------------------|---------------------------------------|
 | `dm.csv`| `2_sdtm/data/`   | Demographics source (SDTM-style CSV)  |
 
-### ⚙️ Key Steps
+### Key Steps
 1. **Date conversion** – transforms ISO-8601 text dates (`TRTSDTC`, `TRTENDTC`, `BRTHDTC`) into numeric SAS dates (`TRTSDT`, `TRTEDT`, `BRTHDT`).  
 2. **Population flags** – derives  
    * `SAFFL = "Y"` if `TRTSDT` exists (safety population)  
@@ -317,27 +325,27 @@ Builds the master subject-level ADaM dataset from SDTM Demographics (`DM`).
 3. **Variable ordering** – reorders variables to standard ADaM ADSL layout.  
 4. **XPT compatibility** – renames `ACTARMNRS` → `ACTARMRS` before export.
 
-### 🧾 Outputs
+### Outputs
 | File        | Location        | Format |
 |-------------|-----------------|--------|
 | `adsl.csv`  | `3_adam/data/`  | CSV    |
 | `adsl.xpt`  | `3_adam/data/`  | XPT    |
 
-### 📎 Notes
+### Notes
 * Flags are intentionally simplified for demonstration; real studies should derive populations per protocol.  
 * All data are **synthetic** – no real patient information is included.
 
 
 ## Dataset: ADVS (Vital Signs)
 
-### 📜 Description
+### Description
 This script creates the `ADVS` (Analysis Dataset for Vital Signs) by merging SDTM-like `VS` data with treatment assignments from `ADSL`. It prepares a structured ADaM-compliant dataset ready for statistical analysis.
 
-### 📥 Input
+### Input
 - `vs.csv` — Vital Signs dataset (SDTM-like), located in `2_sdtm/data/`
 - `adsl.csv` — Subject-level data for treatment arm info
 
-### ⚙️ Key Processing Steps
+### Key Processing Steps
 - Merges `VS` with `ADSL` to bring in `TRTA` (actual treatment arm)
 - Derives key ADaM variables:
   - `PARAMCD` / `PARAM` from `VSTESTCD` / `VSTEST`
@@ -347,24 +355,24 @@ This script creates the `ADVS` (Analysis Dataset for Vital Signs) by merging SDT
   - `ADT` as formatted analysis date from `VSDTC`
 - Applies CDISC-compliant labeling and variable order
 
-### 🧾 Output
+### Output
 - `advs.csv` → saved to `3_adam/data/`
 - `advs.xpt` → saved to `3_adam/data/`
 
-### 📎 Notes
+### Notes
 - Assumes `VSDTC` is in `YYYY-MM-D
 
 
 ## Dataset: ADAE (Adverse Events)
 
-### 📜 Description
+### Description
 This script creates the `ADAE` (Analysis Adverse Events) dataset from a raw AE CSV file. It simulates an SDTM-like structure before deriving the analysis-ready dataset.
 
-### 📥 Input
+### Input
 - `ae.csv` — located in `2_sdtm/data/`
 - Simulated reference start date: `01JAN2023` (hardcoded for AESTDY/AEENDY calculation)
 
-### ⚙️ Key Processing Steps
+### Key Processing Steps
 - Renames problematic numeric date variables to avoid conflicts
 - Creates SDTM-style AE dataset (`ae_sdtm`) with:
   - Derived variables: `AESTDTC`, `AEENDTC` (ISO format), `AESTDY`, `AEENDY`
@@ -373,44 +381,44 @@ This script creates the `ADAE` (Analysis Adverse Events) dataset from a raw AE C
 - Generates `AESEQ` per subject and sorts events chronologically
 - Reorders variables to match CDISC SDTM specifications
 
-### 🧾 Output
+### Output
 - `ae.csv` → saved to `3_adam/data/`
 - `ae.xpt` → saved to `3_adam/data/`
 - Frequency tables (not exported)
 
-### 📎 Notes
+### Notes
 - `AESOC` is not part of the main ADAE dataset but extracted separately into SUPPAE
 - The dataset is simulated and not based on real MedDRA-coded terms
 
 ## Dataset: SUPPAE (Supplemental Qualifiers for ADAE)
 
-### 📜 Description
+### Description
 This script generates `SUPPAE`, a supplemental qualifiers dataset for `ADAE`, using the `AESOC` field (System Organ Class) if available.
 
-### 📥 Input
+### Input
 - Derived from the `ae_final` dataset created during ADAE construction
 - Assumes `AESOC` is present in the original raw AE data
 
-### ⚙️ Key Processing Steps
+### Key Processing Steps
 - Constructs SUPP domain fields: `QNAM`, `QLABEL`, `QVAL` for `AESOC`
 - Links each record to `ADAE` using `USUBJID` + `AESEQ`
 - Retains only supplemental records with non-missing `AESOC`
 
-### 🧾 Output
+### Output
 - `suppae.csv` → saved to `3_adam/data/`
 - `suppae.xpt` → saved to `3_adam/data/`
 - Frequency count of `QVAL` for `AESOC`
 
-### 📎 Notes
+### Notes
 - This dataset is required to maintain standard traceability for supplemental terms not included in the core `ADAE`
 - Used for structured representation of MedDRA SOC if available
 
 ---
-## 🧪 Pinnacle 21 Validation Summary (ADaM Datasets)
+## Pinnacle 21 Validation Summary (ADaM Datasets)
 
 This project includes a simulated ADaM package created for educational and portfolio purposes. The datasets were validated using **Pinnacle 21 Community**, configured for **ADaM-IG 1.3 (FDA)**.
 
-### ✅ Validation Results
+### Validation Results
 
 - All `.xpt` datasets were successfully processed with **no rejections**.
 - The following ADaM domains were included:
@@ -419,7 +427,7 @@ This project includes a simulated ADaM package created for educational and portf
   - `ADVS` (Vital Signs Dataset)
   - `SUPPAE` (Supplemental Qualifiers for ADAE)
 
-### ⚠️ Known Issues (Expected in a Simulated Context)
+### Known Issues (Expected in a Simulated Context)
 
 | Issue Category      | Description                                                                                         | Acceptable in Simulated Data? |
 |---------------------|-----------------------------------------------------------------------------------------------------|-------------------------------|
@@ -429,7 +437,7 @@ This project includes a simulated ADaM package created for educational and portf
 | **Variable Label/Type Mismatches** | Minor mismatches between dataset variable names/types and ADaM-IG expectations.                           | ✅ Yes — Not impactful for the demo objective. |
 | **Length Warnings** | Variable length exceeds observed value length (e.g., `length too long for actual data`).           | ✅ Yes — Result of fixed-length assignment in simulated data. |
 
-### 📝 Disclaimer
+### Disclaimer
 
 This ADaM package is **not regulatory-grade** and is not intended for submission. It is a learning tool and demonstration of:
 - ADaM structure and standards
@@ -437,23 +445,22 @@ This ADaM package is **not regulatory-grade** and is not intended for submission
 - How to interpret and document validation outputs in a real-world workflow
 
 No proprietary or clinical data is used — all records are **synthetic and randomly generated**.
-
 ---
 
-# 📊 T-Test Analysis – Body Temperature at Day 7
+# T-Test Analysis – Body Temperature at Day 7
 
 This analysis compares the mean body temperature at Day 7 between the **ViralBlock** and **Placebo** arms using a two-sample t-test.  
 The analysis was performed using SAS and follows the standard project structure.
 
 ---
 
-## 🔍 Objective
+## Objective
 
 To determine whether there is a statistically significant difference in body temperature at Day 7 between the treatment groups.
 
 ---
 
-## 🧪 Data Input
+## Data Input
 
 - `advs.csv`: ADaM Vital Signs dataset
   - Filtered on `PARAMCD = "TEMP"` and `AVISIT = "Day 7"`
@@ -462,7 +469,7 @@ To determine whether there is a statistically significant difference in body tem
 
 ---
 
-## 💻 Script Location
+## Script Location
 
 - `4_analysis/analysis_scripts/ttest_temp_day7.sas`
 
@@ -474,7 +481,7 @@ The script:
 
 ---
 
-## 📤 Output Files
+## Output Files
 
 ### Intermediate outputs:
 Located in: `4_analysis/analysis_outputs/ttest/`
@@ -491,7 +498,7 @@ Located in: `5_results/final_tables_figures/ttest/`
 
 ---
 
-## 📊 Summary of Results
+## Summary of Results
 
 | Group       | Mean (°C) | SD     | N   |
 |-------------|-----------|--------|-----|
@@ -544,18 +551,18 @@ This directory contains the SAS script and outputs for an ANCOVA analysis compar
 
 ---
 
-## 🧪 Logistic Regression: Probability of Recovery
+## Logistic Regression: Probability of Recovery
 
 **Location:**  
 - Script: `4_analysis/analysis_scripts/logistic_recovery.sas`  
 - Outputs: `4_analysis/analysis_outputs/logistic/`  
 - Final results: `5_results/final_tables_figures/logistic/`
 
-### 🎯 Objective
+### Objective
 This analysis models the probability of recovery (`AEOUT = "RECOVERED"`) using logistic regression.  
 The binary outcome variable `RECOVFL` is derived and modeled against key covariates.
 
-### 📈 Method
+### Method
 - Logistic regression using `PROC LOGISTIC` in SAS.
 - Model:  
   `RECOVFL ~ ARM + AGE + SEX`  
@@ -565,11 +572,11 @@ The binary outcome variable `RECOVFL` is derived and modeled against key covaria
 - Class variables are treated with reference coding (`ref='Placebo'` for ARM).
 - Odds ratios and 95% confidence intervals are reported.
 
-### 📥 Input Datasets
+### Input Datasets
 - `adae.csv`: Adverse Events data
 - `adsl.csv`: Subject-level data (demographics, treatment)
 
-### 📤 Output Files
+### Output Files
 
 #### In `4_analysis/analysis_outputs/logistic/`:
 - `logistic_estimates.csv`: Model parameter estimates
@@ -584,16 +591,13 @@ These are the finalized deliverables:
 
 ---
 
-📌 *This script is part of the VIRALBLOCK01 analysis pipeline for illustrating statistical analysis in clinical trials.*
----
-
-## 🔍 Survival Analysis – Serious Adverse Events (AESER = "Y")
+## Survival Analysis – Serious Adverse Events (AESER = "Y")
 
 This module performs a time-to-event (survival) analysis using SAS to compare the occurrence of **serious adverse events (SAEs)** between treatment arms (`Placebo` vs `Viralblock`), using the **Kaplan–Meier method**, **log-rank test**, and **Cox proportional hazards regression**.
 
 ---
 
-### ⚙️ Analysis Overview
+### Analysis Overview
 
 - **Data Sources**:
   - `adsl.csv`: Subject-level dataset (ARM, AGE, SEX)
@@ -610,7 +614,7 @@ This module performs a time-to-event (survival) analysis using SAS to compare th
 
 ---
 
-### 📁 File Locations
+### File Locations
 
 - **Script**:  
   `4_analysis/analysis_scripts/survival_analysis.sas`
@@ -629,7 +633,7 @@ This module performs a time-to-event (survival) analysis using SAS to compare th
 
 ---
 
-### 📄 Output Files Description
+### Output Files Description
 
 - `km_survival_plot.pdf`: Kaplan–Meier survival curves with at-risk table
 - `cox_model.pdf`: Cox model summary (HR, 95% CI, p-values)
@@ -637,7 +641,7 @@ This module performs a time-to-event (survival) analysis using SAS to compare th
 
 ---
 
-### 📝 Notes
+### Notes
 
 - Survival time is measured in days from the start date (`01JAN2022`) to the first SAE or censoring.
 - Only the **first serious AE** per subject is considered.
@@ -724,13 +728,13 @@ This approach improves the comparability of treatment arms and supports unbiased
 
 This folder contains the SAS script and outputs for the longitudinal analysis of peripheral oxygen saturation (SPO2) measured at multiple time points across treatment groups (Placebo vs. ViralBlock).
 
-### 📁 Folder Structure
+### Folder Structure
 
 - `4_analysis/analysis_scripts/longitudinal_spo2_analysis.sas`: Main SAS script.
 - `4_analysis/analysis_outputs/longitudinal_analysis/`: Intermediate and raw output PDFs.
 - `5_results/final_tables_figures/longitudinal_analysis/`: Final outputs for reporting.
 
-### 🧪 Description of the Analysis
+### Description of the Analysis
 
 1. **Data Preparation**
    - Import ADSL and ADVS datasets.
@@ -746,7 +750,7 @@ This folder contains the SAS script and outputs for the longitudinal analysis of
    - Run `PROC MIXED` including fixed effects for treatment, time (AVISITN), and their interaction.
    - Specify a compound symmetry covariance structure and estimate using REML.
 
-### 📄 Outputs
+### Outputs
 
 - `rmanova_spo2.pdf`: Repeated Measures ANOVA results.
 - `lmm_spo2.pdf`: Linear Mixed Model output.
@@ -802,18 +806,12 @@ This script requires the following R packages:
 - `factoextra`
 
 ---
-## 📌 Notes
-
-- Final figures and tables are used in the Mock Report.
-- This analysis is referenced in both the Statistical Analysis Plan (SAP) and the final results.
-
----
 
 ## Tools Used
 
 - **R** - simulation and analysis
 - **Git/Github** - version control
-- *SAS scripts, SQL queries, analysis outputs*
+- *SAS scripts, analysis outputs*
 
 ---
 
